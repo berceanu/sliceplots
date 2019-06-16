@@ -2,8 +2,6 @@
 
 """Main module, containing useful plotting abstractions on top of matplotlib."""
 
-from typing import Union
-
 import numpy as np
 from matplotlib.artist import setp, getp
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
@@ -119,7 +117,7 @@ class Plot2D:
     @staticmethod
     def colorbar(mappable):
         r"""Constructs a scaled colorbar for a given plot.
-        
+
         Parameters
         ----------
         mappable : The Image, ContourSet, etc. to which the colorbar applies.
@@ -228,8 +226,8 @@ class Plot2D:
             #
             self.main_panel(**kwargs)
             #
-            self.ax0.axhline(y=self.v_axis[self.hslice_idx], **hslice_opts)  ##----##
-            self.ax0.axvline(x=self.h_axis[self.vslice_idx], **vslice_opts)  ## | ##
+            self.ax0.axhline(y=self.v_axis[self.hslice_idx], **hslice_opts)  # ##----##
+            self.ax0.axvline(x=self.h_axis[self.vslice_idx], **vslice_opts)  # ## | ##
             # --- #
             self.ax0.annotate(
                 "{:.1f}".format(self.v_axis[self.hslice_idx]),

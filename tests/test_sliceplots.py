@@ -3,8 +3,6 @@
 
 """Tests for `sliceplots` package."""
 
-import pytest
-from numpy.testing import assert_almost_equal
 import numpy as np
 
 from sliceplots import sliceplots as sp
