@@ -4,22 +4,13 @@
 """Tests for `sliceplots` package."""
 
 import pytest
+from numpy.testing import assert_almost_equal
+import numpy as np
+
+from sliceplots import sliceplots as sp
 
 
-from sliceplots import sliceplots
-
-
-@pytest.fixture
-def response():
-    """Sample pytest fixture.
-
-    See more at: http://doc.pytest.org/en/latest/fixture.html
-    """
-    # import requests
-    # return requests.get('https://github.com/audreyr/cookiecutter-pypackage')
-
-
-def test_content(response):
-    """Sample pytest test function with the pytest fixture as an argument."""
-    # from bs4 import BeautifulSoup
-    # assert 'GitHub' in BeautifulSoup(response.content).title.string
+def test_idx_from_val():
+    """Find element position in array."""
+    position = sp.idx_from_val(np.linspace(0, 10, 11), 5.)
+    assert position == 5
