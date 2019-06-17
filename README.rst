@@ -26,10 +26,5 @@ sliceplots
 * Free software: BSD license
 * Documentation: https://sliceplots.readthedocs.io.
 
-
-Features
---------
-
 .. image:: ./tests/baseline/plot2d.png
-
 
