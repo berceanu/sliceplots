@@ -21,6 +21,7 @@ here is an example of a "broken-axis" plot::
                           'xlabel': r'$x$ ($\mu$m)',
                           'ylabel': r'$\rho$ (cm$^{-3}$)'},
                          {'ls': '--', 'color': 'red'})
+
     fig.savefig("test_plot1d_break_x.png")
 
 .. image:: ../tests/baseline/test_plot1d_break_x.png
@@ -35,6 +36,38 @@ The :py:class:`Plot1D` class is a very thin wrapper around :py:func:`matplotlib.
                         ylim=[-1, 1],
                         figsize=(10, 6),
                         color='red')
-    plot.canvas.print_figure('test_plot1d.png')
+
+    plot.fig.savefig('test_plot1d.png')
 
 .. image:: ../tests/baseline/test_plot1d.png
+
+Finally, to use the 2D interface::
+
+    import sliceplots.two_dimensional as two_d
+
+    p2d = two_d.Plot2D(data,
+                       uu,
+                       uu,
+                       xlabel=r'$x$ ($\mu$m)',
+                       ylabel=r'$y$ ($\mu$m)',
+                       zlabel=r'$\rho$ (cm$^{-3}$)',
+                       hslice_val=np.pi / 3.0,
+                       vslice_val=np.pi / 1.2,
+                       hslice_opts={'color': 'firebrick', 'lw': 0.5, 'ls': '-'},
+                       vslice_opts={'color': 'blue', 'ls': '-'},
+                       figsize=(8, 8),
+                       cmap='viridis',
+                       cbar=True,
+                       extent=(0, np.pi, 0, np.pi),
+                       vmin=-1.0,
+                       vmax=1.0,
+                       text='your text here',
+                       )
+
+    p2d.fig.savefig("plot2d.png")
+
+.. image:: ../tests/baseline/plot2d.png
+
+Different data normalization functions from :py:module:`matplotlib.colors` can
+be used, by passing :code:`norm=colors.LogNorm()` or :code:`norm=colors.SymLogNorm(linthresh=1e-4)`.
+
