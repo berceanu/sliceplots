@@ -30,5 +30,6 @@ sliceplots
 Features
 --------
 
-* TODO
+.. image:: ./tests/baseline/plot2d.png
+
 
