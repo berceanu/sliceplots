@@ -35,8 +35,4 @@ def test_plot2d():
                        text='your text here',
                        )
 
-    return p2d.fig  # p2d.canvas.figure
-
-import matplotlib.colors as colors
-norm = colors.LogNorm()
-# Other options for norm: norm = colors.LogNorm(), norm=colors.SymLogNorm(linthresh=1e-4)
+    return p2d.fig

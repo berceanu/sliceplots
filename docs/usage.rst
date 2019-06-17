@@ -28,16 +28,16 @@ here is an example of a "broken-axis" plot::
 
 The :py:class:`Plot1D` class is a very thin wrapper around :py:func:`matplotlib.axes.Axes.plot`::
 
-    plot = one_d.Plot1D(uu,
-                        data[data.shape[0] // 2, :],
-                        xlabel=r'$%s \;(\mu m)$' % 'z',
-                        ylabel=r'$%s$' % 'a_0',
-                        xlim=[0, 3],
-                        ylim=[-1, 1],
-                        figsize=(10, 6),
-                        color='red')
+    p1d = one_d.Plot1D(uu,
+                       data[data.shape[0] // 2, :],
+                       xlabel=r'$%s \;(\mu m)$' % 'z',
+                       ylabel=r'$%s$' % 'a_0',
+                       xlim=[0, 3],
+                       ylim=[-1, 1],
+                       figsize=(10, 6),
+                       color='red')
 
-    plot.fig.savefig('test_plot1d.png')
+    p1d.fig.savefig('test_plot1d.png')
 
 .. image:: ../tests/baseline/test_plot1d.png
 

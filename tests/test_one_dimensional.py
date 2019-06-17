@@ -23,20 +23,22 @@ def test_plot1d_break_x():
                           'xlim_right': (2, 3),
                           'xlabel': r'$x$ ($\mu$m)',
                           'ylabel': r'$\rho$ (cm$^{-3}$)'},
-                         {'ls': '--', 'color': 'red'})
+                         {'ls': '--',
+                          'color': 'red'})
+
     return fig
 
 
 @pytest.mark.mpl_image_compare()
 def test_plot1d():
     """Checks ``Plot1D`` class."""
-    plot = one_d.Plot1D(uu,
-                        data[data.shape[0] // 2, :],
-                        xlabel=r'$%s \;(\mu m)$' % 'z',
-                        ylabel=r'$%s$' % 'a_0',
-                        xlim=[0, 3],
-                        ylim=[-1, 1],
-                        figsize=(10, 6),
-                        color='red')
+    p1d = one_d.Plot1D(uu,
+                       data[data.shape[0] // 2, :],
+                       xlabel=r'$%s \;(\mu m)$' % 'z',
+                       ylabel=r'$%s$' % 'a_0',
+                       xlim=[0, 3],
+                       ylim=[-1, 1],
+                       figsize=(10, 6),
+                       color='red')
 
-    return plot.canvas.figure
+    return p1d.fig
