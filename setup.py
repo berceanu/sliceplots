@@ -27,7 +27,6 @@ setup(
         'Natural Language :: English',
         'Topic :: Scientific/Engineering :: Physics',
         'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
     ],
     description="sliceplots is a thin wrapper on top of matplotlib's imshow for 2D plotting with attached slice plots.",
     install_requires=requirements,
