@@ -68,6 +68,7 @@ Finally, to use the 2D interface::
 
 .. image:: ../tests/baseline/plot2d.png
 
-Different data normalization functions from :py:module:`matplotlib.colors` can
-be used, by passing :code:`norm=colors.LogNorm()` or :code:`norm=colors.SymLogNorm(linthresh=1e-4)`.
+Different data normalization functions from :py:mod:`matplotlib.colors` can be
+used, by passing :code:`norm=colors.LogNorm()` or
+:code:`norm=colors.SymLogNorm(linthresh=1e-4)`.
 
