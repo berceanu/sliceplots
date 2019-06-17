@@ -11,13 +11,20 @@ from .util import idx_from_val
 
 
 def plot1d_break_x(fig, h_axis, v_axis, param, slice_opts):
-    r"""
-    >>> uu = np.linspace(0, np.pi, 128)
-    >>> data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
-    >>> fig, ax = plt.subplots(figsize=(8, 3.2))
-    >>> plot1d_break_x(fig, uu, data[data.shape[0]//2], {'xlim_left':(0,1), 'xlim_right':(2,3),
-        'xlabel':r'$x$ ($\mu$m)', 'ylabel':r'$\rho$ (cm$^{-3}$)'}, {'ls': '--', 'color': '0.5'})
-    >>> fig
+    """Line plot with a broken x-axis.
+
+    :param fig: Figure instance
+    :type fig: :py:class:`matplotlib.figure.Figure`
+    :param h_axis: x-axis data
+    :type h_axis: :py:class:`numpy.ndarray`
+    :param v_axis: y-axis data
+    :type v_axis:  :py:class:`numpy.ndarray`
+    :param param: Axes limits and labels.
+    :type param: dict
+    :param slice_opts: Options for plotted line.
+    :type slice_opts: dict
+    :returns: Generates plot on ``fig``.
+    :rtype: None
     """
     ax_left = fig.axes[0]
     divider = make_axes_locatable(ax_left)
@@ -29,9 +36,8 @@ def plot1d_break_x(fig, h_axis, v_axis, param, slice_opts):
     ax_left.set_xlabel(param["xlabel"])
 
     ax_left.set_xlim(*param["xlim_left"])
-    ax_left.yaxis.tick_left()
-    ax_left.tick_params(labelright="off")
     ax_left.spines["right"].set_visible(False)
+    ax_left.yaxis.set_ticks_position("left")
 
     ax_right.plot(h_axis, v_axis, **slice_opts)
     ax_right.set_ylabel(param["ylabel"])
@@ -39,8 +45,8 @@ def plot1d_break_x(fig, h_axis, v_axis, param, slice_opts):
     ax_right.yaxis.set_label_position("right")
 
     ax_right.set_xlim(*param["xlim_right"])
-    ax_right.yaxis.tick_right()
     ax_right.spines["left"].set_visible(False)
+    ax_right.yaxis.set_ticks_position("right")
 
     # From https://matplotlib.org/examples/pylab_examples/broken_axis.html
     d = 0.015  # how big to make the diagonal lines in axes coordinates
@@ -55,27 +61,22 @@ def plot1d_break_x(fig, h_axis, v_axis, param, slice_opts):
 
 
 class Plot1D:
-    """
-    Plot of 1D array.
+    """Plot the data with given labels and plot options.
+
+    :param v_axis: y-axis data
+    :type v_axis: :py:class:`np.ndarray`
+    :param h_axis: x-axis data
+    :type h_axis: :py:class:`np.ndarray`
+    :param xlabel: x-axis label
+    :type xlabel: str
+    :param ylabel: y-axis label
+    :type ylabel: str
+    :param kwargs: other arguments for :py:func:`matplotlib.plot`
     """
 
-    def __init__(
-        self, arr1d: np.ndarray, h_axis: np.ndarray, xlabel=r"", ylabel=r"", **kwargs
-    ) -> None:
-        r"""
-        >>> plot = Plot1D(a0, z0, xlabel=r'$%s \;(\mu m)$'%'z', ylabel=r'$%s$'%'a_0',
-                                xlim=[0, 900], ylim=[0, 10],
-                                figsize=(10, 6), color='red')
-        >>> plot.canvas.print_figure('a0.png')
-
-        :param arr1d: data to be plotted on the "y" axis
-        :param h_axis: values on the "x" axis
-        :param xlabel: "x" axis label
-        :param ylabel: "y" axis label
-        :param kwargs: other arguments for ``matplotlib.plot()``
-        """
+    def __init__(self, h_axis, v_axis, xlabel=r"", ylabel=r"", **kwargs):
         self.xlim = kwargs.pop("xlim", [np.min(h_axis), np.max(h_axis)])
-        self.ylim = kwargs.pop("ylim", [np.min(arr1d), np.max(arr1d)])
+        self.ylim = kwargs.pop("ylim", [np.min(v_axis), np.max(v_axis)])
         #
         xmin_idx, xmax_idx = (
             idx_from_val(h_axis, self.xlim[0]),
@@ -83,7 +84,7 @@ class Plot1D:
         )
         #
         self.h_axis = h_axis[xmin_idx:xmax_idx]
-        self.data = arr1d[xmin_idx:xmax_idx]
+        self.data = v_axis[xmin_idx:xmax_idx]
         #
         self.label = {"x": xlabel, "y": ylabel}
         self.text = kwargs.pop("text", "")
