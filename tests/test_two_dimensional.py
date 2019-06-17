@@ -25,7 +25,7 @@ def test_plot2d():
                        xlabel=r'$x$ ($\mu$m)',
                        ylabel=r'$y$ ($\mu$m)',
                        zlabel=r'$\rho$ (cm$^{-3}$)',
-                       hslice_val=np.pi / 3.0,
+                       hslice_val=np.pi / 2.0,
                        vslice_val=np.pi / 1.2,
                        hslice_opts={'color': 'firebrick', 'lw': 0.5, 'ls': '-'},
                        vslice_opts={'color': 'blue', 'ls': '-'},
