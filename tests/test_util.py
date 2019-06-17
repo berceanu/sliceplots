@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Tests for `sliceplots` package."""
+"""Tests for `sliceplots.util` module."""
 
 import numpy as np
 
