@@ -14,47 +14,33 @@ from .util import idx_from_val
 
 
 class Plot2D:
-    """
-    Pseudocolor plot of a 2D array with optional 1D slices attached.
+    """Pseudo-color plot of a 2D array with optional 1D slices attached.
+
+    :param arr2d: data to be plotted
+    :type arr2d: :py:class:`np.ndarray`
+    :param h_axis: values on the "x" axis
+    :type h_axis: :py:class:`np.ndarray`
+    :param v_axis: values on the "y" axis
+    :type v_axis: :py:class:`np.ndarray`
+    :param xlabel: x-axis label
+    :type xlabel: str
+    :param ylabel: y-axis label
+    :type ylabel: str
+    :param zlabel: label for :py:class:`matplotlib.colorbar.Colorbar`
+    :type zlabel: str
+    :param kwargs: other plot options
     """
 
     def __init__(
         self,
-        arr2d: np.ndarray,
-        h_axis: np.ndarray,
-        v_axis: np.ndarray,
+        arr2d,
+        h_axis,
+        v_axis,
         xlabel=r"",
         ylabel=r"",
         zlabel=r"",
         **kwargs
-    ) -> None:
-        r"""
-        >>> uu = np.linspace(0, np.pi, 128)
-        >>> data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
-        >>> p2d = Plot2D(data, uu, uu,
-                    xlabel=r'$x$ ($\mu$m)', ylabel=r'$y$ ($\mu$m)', zlabel=r'$\rho$ (cm$^{-3}$)',
-                    hslice_val=0,
-                    vslice_val=840.5,
-                    hslice_opts={'color': 'firebrick', 'lw' : 0.5, 'ls':'-'},
-                    vslice_opts={'color': 'blue', 'ls': '-'},
-                    figsize=(8, 8), cmap='viridis', cbar=True,
-                    extent=(822, 865, -20, 20),
-                    vmin=-0.1, vmax=10,
-                    text='iteration = {}'.format(35100),
-                    norm=colors.SymLogNorm(linthresh=1e-4)
-                    )
-        Other options for norm:
-        >>> import matplotlib.colors as colors
-        >>> norm = colors.LogNorm()
-
-        :param arr2d: data to be plotted
-        :param h_axis: values on the "x" axis
-        :param v_axis: values on the "y" axis
-        :param xlabel: "x" axis label
-        :param ylabel: "y" axis label
-        :param zlabel: colorbar label
-        :param kwargs: other arguments for ``matplotlib``
-        """
+    ):
         self.extent = kwargs.get(
             "extent", (np.min(h_axis), np.max(h_axis), np.min(v_axis), np.max(v_axis))
         )
@@ -119,7 +105,7 @@ class Plot2D:
 
     @staticmethod
     def colorbar(mappable):
-        r"""Constructs a scaled colorbar for a given plot.
+        """Constructs a scaled colorbar for a given plot.
 
         Parameters
         ----------
