@@ -20,7 +20,7 @@ sliceplots
 
 
 
-sliceplots is a thin wrapper on top of matplotlib's imshow for 2D plotting with attached slice plots.
+``sliceplots`` is a thin wrapper on top of ``matplotlib``'s ``.imshow()`` for 2D plotting, with attached slice plots
 
 
 * Free software: BSD license
