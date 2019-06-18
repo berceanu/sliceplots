@@ -53,15 +53,18 @@ Generate a quick slice plot:
         axis_data = np.linspace(0, np.pi, 128)
         data_2d = np.cos(axis_data - 0.5) * np.cos(axis_data.reshape(-1, 1) - 1.0)
 
-        p2d = two_d.Plot2D(data_2d,
-                           axis_data,
-                           axis_data,
-                           xlabel='x',
-                           ylabel='y',
-                           zlabel='f(x,y)',
-                           hslice_val=1.0,
-                           vslice_val=2.75)
-        p2d.fig.savefig('imshow_slices.png')
+        p2d = two_d.Plot2D(
+            data_2d,
+            axis_data,  # horiz. axis
+            axis_data,  # vert. axis
+            xlabel="x",
+            ylabel="y",
+            zlabel="f(x,y)",
+            hslice_val=1.0,
+            vslice_val=2.75,
+        )
+        p2d.fig.savefig("imshow_slices.png")
+
 
 .. image:: ./tests/baseline/imshow_slices.png
 
