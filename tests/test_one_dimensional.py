@@ -14,7 +14,7 @@ uu = np.linspace(0, np.pi, 128)
 data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
 
 
-@pytest.mark.mpl_image_compare()
+@pytest.mark.mpl_image_compare(style='mpl20', savefig_kwargs={'bbox_inches': 'tight'})
 def test_plot1d_break_x():
     """Checks broken x-axis plot."""
     fig, ax = plt.subplots(figsize=(8, 3.2))
@@ -29,7 +29,7 @@ def test_plot1d_break_x():
     return fig
 
 
-@pytest.mark.mpl_image_compare()
+@pytest.mark.mpl_image_compare(style='mpl20', savefig_kwargs={'bbox_inches': 'tight'})
 def test_plot1d():
     """Checks ``Plot1D`` class."""
     p1d = one_d.Plot1D(uu,

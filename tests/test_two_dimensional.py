@@ -15,7 +15,8 @@ data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
 # todo directly use matplotlib's own testing facilities once 3.2.0 is released
 #       see https://matplotlib.org/3.1.0/devel/testing.html
 
-@pytest.mark.mpl_image_compare()
+# py.test --mpl-generate-path=baseline
+@pytest.mark.mpl_image_compare(style='mpl20', savefig_kwargs={'bbox_inches': 'tight'})
 # https://github.com/matplotlib/pytest-mpl
 def test_plot2d():
     """Checks ``Plot2D`` class."""
