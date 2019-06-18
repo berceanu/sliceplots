@@ -67,7 +67,7 @@ Generate a quick slice plot:
 Credits
 -------
 
-Big thanks to `@afvincent`_ for `this gist`_.
+Big thanks to `@afvincent`_ for `his gist`_.
 
 .. _`@afvincent`: https://github.com/afvincent
-.. _`this gist`: https://gist.github.com/afvincent/0e6b743e32a3fa62b580657693163b7e
+.. _`his gist`: https://gist.github.com/afvincent/0e6b743e32a3fa62b580657693163b7e
