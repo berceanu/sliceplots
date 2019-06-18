@@ -22,9 +22,9 @@ here is an example of a "broken-axis" plot::
                           'ylabel': r'$\rho$ (cm$^{-3}$)'},
                          {'ls': '--', 'color': 'red'})
 
-    fig.savefig("break_x.png", bbox_inches='tight')
+    fig.savefig("test_plot1d_break_x.png", bbox_inches='tight')
 
-.. image:: ../tests/baseline/break_x.png
+.. image:: ../tests/baseline/test_plot1d_break_x.png
 
 The :py:class:`Plot1D` class is a very thin wrapper around :py:func:`matplotlib.axes.Axes.plot`::
 
@@ -37,9 +37,9 @@ The :py:class:`Plot1D` class is a very thin wrapper around :py:func:`matplotlib.
                        figsize=(10, 6),
                        color='red')
 
-    p1d.fig.savefig('plot1d.png', bbox_inches='tight')
+    p1d.fig.savefig('test_plot1d.png', bbox_inches='tight')
 
-.. image:: ../tests/baseline/plot1d.png
+.. image:: ../tests/baseline/test_plot1d.png
 
 Finally, to use the 2D interface::
 
@@ -64,9 +64,9 @@ Finally, to use the 2D interface::
                        text='your text here',
                        )
 
-    p2d.fig.savefig("plot2d.png", bbox_inches='tight')
+    p2d.fig.savefig("test_plot2d.png", bbox_inches='tight')
 
-.. image:: ../tests/baseline/plot2d.png
+.. image:: ../tests/baseline/test_plot2d.png
 
 Different data normalization functions from :py:mod:`matplotlib.colors` can be
 used, by passing :code:`norm=colors.LogNorm()` or
