@@ -29,7 +29,7 @@ thin wrapper on top of ``matplotlib``'s ``.imshow()`` for 2D plotting, with atta
 Features
 --------
 
-* only depends on `matplotlib`
+* only depends on ``matplotlib``
 * uses the pure OO (look Ma, no ``pyplot``!) interface of ``matplotlib``
 * support for 1D and 2D plots with various customization options
 * broken-axis 1D plots
