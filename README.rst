@@ -59,9 +59,8 @@ Generate a quick slice plot:
                            ylabel='y',
                            zlabel='f(x,y)',
                            hslice_val=1.0,
-                           vslice_val=2.75,
-                           figsize=(6.0, 6.0))
-        p2d.fig.savefig("imshow_slices.png", bbox_inches='tight')
+                           vslice_val=2.75)
+        p2d.fig.savefig('imshow_slices.png')
 
 .. image:: ./tests/baseline/imshow_slices.png
 
