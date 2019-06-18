@@ -24,7 +24,7 @@ thin wrapper on top of ``matplotlib``'s ``.imshow()`` for 2D plotting, with atta
 
 
 * Free software: BSD license
-* Documentation: https://sliceplots.readthedocs.io.
+* Documentation: https://sliceplots.readthedocs.io
 
 Features
 --------
