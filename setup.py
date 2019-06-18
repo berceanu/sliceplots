@@ -33,7 +33,7 @@ setup(
     license="BSD license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
-    keywords='sliceplots plotting',
+    keywords='slice plot plotting',
     name='sliceplots',
     packages=find_packages(include=['sliceplots']),
     setup_requires=setup_requirements,
