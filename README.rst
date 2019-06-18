@@ -30,7 +30,7 @@ Features
 --------
 
 * only depends on ``matplotlib``
-* uses the pure OO (look Ma, no ``pyplot``!) interface of ``matplotlib``
+* uses its pure OO (look Ma, no ``pyplot``!) interface
 * support for 1D and 2D plots with various customization options
 * broken-axis 1D plots
 
