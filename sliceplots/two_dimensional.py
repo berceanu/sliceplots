@@ -9,6 +9,7 @@ from matplotlib.figure import Figure
 from matplotlib.gridspec import GridSpec
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+import matplotlib.transforms as transforms
 
 from .util import idx_from_val
 
@@ -157,12 +158,17 @@ class Plot2D:
             #
             self.ax0.axhline(y=self.v_axis[self.hslice_idx], **hslice_opts)
             #
-            self.ax0.annotate(
-                "{:.1f}".format(self.v_axis[self.hslice_idx]),
-                xy=(self.h_axis[3], self.v_axis[self.hslice_idx + 3]),
-                xycoords="data",
-                color=hslice_opts["color"],
-            )
+            trans = transforms.blended_transform_factory(
+                self.ax0.get_yticklabels()[0].get_transform(), self.ax0.transData)
+            self.ax0.text(0, self.v_axis[self.hslice_idx], "{:.1f}".format(self.v_axis[self.hslice_idx]), color=hslice_opts["color"], transform=trans,
+                    ha="right", va="center")
+            #
+            # self.ax0.annotate(
+            #     "{:.1f}".format(self.v_axis[self.hslice_idx]),
+            #     xy=(self.h_axis[3], self.v_axis[self.hslice_idx + 3]),
+            #     xycoords="data",
+            #     color=hslice_opts["color"],
+            # )
             #
             self.axh.set_xmargin(0)
             self.axh.set_ylabel(self.label["z"])
@@ -218,12 +224,17 @@ class Plot2D:
             self.ax0.axhline(y=self.v_axis[self.hslice_idx], **hslice_opts)  # ##----##
             self.ax0.axvline(x=self.h_axis[self.vslice_idx], **vslice_opts)  # ## | ##
             # --- #
-            self.ax0.annotate(
-                "{:.1f}".format(self.v_axis[self.hslice_idx]),
-                xy=(self.h_axis[3], self.v_axis[self.hslice_idx + 3]),
-                xycoords="data",
-                color=hslice_opts["color"],
-            )
+            trans = transforms.blended_transform_factory(
+                self.ax0.get_yticklabels()[0].get_transform(), self.ax0.transData)
+            self.ax0.text(0, self.v_axis[self.hslice_idx], "{:.1f}".format(self.v_axis[self.hslice_idx]), color=hslice_opts["color"], transform=trans,
+                    ha="right", va="center")
+            #
+            # self.ax0.annotate(
+            #     "{:.1f}".format(self.v_axis[self.hslice_idx]),
+            #     xy=(self.h_axis[3], self.v_axis[self.hslice_idx + 3]),
+            #     xycoords="data",
+            #     color=hslice_opts["color"],
+            # )
             # | #
             self.ax0.annotate(
                 "{:.1f}".format(self.h_axis[self.vslice_idx]),
