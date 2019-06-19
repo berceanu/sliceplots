@@ -4,9 +4,9 @@ Usage
 
 To use ``sliceplots`` in a project, we first import it and generate some data::
 
-    import sliceplots.one_dimensional as one_d
-    import matplotlib.pyplot as plt
     import numpy as np
+    import matplotlib.pyplot as plt
+    import sliceplots.one_dimensional as one_d
 
     # data for plotting
     uu = np.linspace(0, np.pi, 128)
@@ -21,7 +21,6 @@ here is an example of a "broken-axis" plot::
                           'xlabel': r'$x$ ($\mu$m)',
                           'ylabel': r'$\rho$ (cm$^{-3}$)'},
                          {'ls': '--', 'color': 'red'})
-
     fig.savefig("test_plot1d_break_x.png", bbox_inches='tight')
 
 .. image:: ../tests/baseline/test_plot1d_break_x.png
@@ -36,7 +35,6 @@ The :py:class:`Plot1D` class is a very thin wrapper around :py:func:`matplotlib.
                        ylim=[-1, 1],
                        figsize=(10, 6),
                        color='red')
-
     p1d.fig.savefig('test_plot1d.png', bbox_inches='tight')
 
 .. image:: ../tests/baseline/test_plot1d.png
@@ -51,19 +49,17 @@ Finally, to use the 2D interface::
                        xlabel=r'$x$ ($\mu$m)',
                        ylabel=r'$y$ ($\mu$m)',
                        zlabel=r'$\rho$ (cm$^{-3}$)',
-                       hslice_val=np.pi / 3.0,
-                       vslice_val=np.pi / 1.2,
-                       hslice_opts={'color': 'firebrick', 'lw': 0.5, 'ls': '-'},
-                       vslice_opts={'color': 'blue', 'ls': '-'},
+                       hslice_val=0.75,
+                       vslice_val=2.75,
+                       hslice_opts={'color': '#1f77b4', 'lw': 0.5, 'ls': '-'},
+                       vslice_opts={'color': '#d62728', 'ls': '-'},
                        figsize=(8, 8),
                        cmap='viridis',
                        cbar=True,
                        extent=(0, np.pi, 0, np.pi),
                        vmin=-1.0,
                        vmax=1.0,
-                       text='your text here',
-                       )
-
+                       text='your text here')
     p2d.fig.savefig("test_plot2d.png", bbox_inches='tight')
 
 .. image:: ../tests/baseline/test_plot2d.png
