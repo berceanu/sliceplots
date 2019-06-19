@@ -2,6 +2,7 @@
 
 """Main containing useful 2D plotting abstractions on top of matplotlib."""
 
+import matplotlib.transforms as transforms
 import numpy as np
 from matplotlib.artist import setp, getp
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
@@ -9,7 +10,6 @@ from matplotlib.figure import Figure
 from matplotlib.gridspec import GridSpec
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
-import matplotlib.transforms as transforms
 
 from .util import idx_from_val
 
@@ -160,8 +160,9 @@ class Plot2D:
             #
             trans = transforms.blended_transform_factory(
                 self.ax0.get_yticklabels()[0].get_transform(), self.ax0.transData)
-            self.ax0.text(0, self.v_axis[self.hslice_idx], "{:.1f}".format(self.v_axis[self.hslice_idx]), color=hslice_opts["color"], transform=trans,
-                    ha="right", va="center")
+            self.ax0.text(0, self.v_axis[self.hslice_idx], "{:.1f}".format(self.v_axis[self.hslice_idx]),
+                          color=hslice_opts["color"], transform=trans,
+                          ha="right", va="center")
             #
             self.axh.set_xmargin(0)
             self.axh.set_ylabel(self.label["z"])
@@ -187,8 +188,9 @@ class Plot2D:
             #
             trans = transforms.blended_transform_factory(
                 self.ax0.transData, self.ax0.get_xticklabels()[0].get_transform())
-            self.ax0.text(self.h_axis[self.vslice_idx], 0, "{:.1f}".format(self.h_axis[self.vslice_idx]), color=vslice_opts["color"], transform=trans,
-                    ha="center", va="top")
+            self.ax0.text(self.h_axis[self.vslice_idx], 0, "{:.1f}".format(self.h_axis[self.vslice_idx]),
+                          color=vslice_opts["color"], transform=trans,
+                          ha="center", va="top")
             #
             self.axv.set_ymargin(0)
             self.axv.set_xlabel(self.label["z"])
@@ -216,13 +218,15 @@ class Plot2D:
             # --- #
             trans = transforms.blended_transform_factory(
                 self.ax0.get_yticklabels()[0].get_transform(), self.ax0.transData)
-            self.ax0.text(0, self.v_axis[self.hslice_idx], "{:.1f}".format(self.v_axis[self.hslice_idx]), color=hslice_opts["color"], transform=trans,
-                    ha="right", va="center")
+            self.ax0.text(0, self.v_axis[self.hslice_idx], "{:.1f}".format(self.v_axis[self.hslice_idx]),
+                          color=hslice_opts["color"], transform=trans,
+                          ha="right", va="center")
             # | #
             trans = transforms.blended_transform_factory(
                 self.ax0.transData, self.ax0.get_xticklabels()[0].get_transform())
-            self.ax0.text(self.h_axis[self.vslice_idx], 0, "{:.1f}".format(self.h_axis[self.vslice_idx]), color=vslice_opts["color"], transform=trans,
-                    ha="center", va="top")
+            self.ax0.text(self.h_axis[self.vslice_idx], 0, "{:.1f}".format(self.h_axis[self.vslice_idx]),
+                          color=vslice_opts["color"], transform=trans,
+                          ha="center", va="top")
             # --- #
             self.axh.set_xmargin(0)  # otherwise ax0 may have white margins
             self.axh.set_ylabel(self.label["z"])

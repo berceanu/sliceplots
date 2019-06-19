@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
+
 import sliceplots.two_dimensional as two_d
 
 if __name__ == '__main__':
@@ -17,5 +18,5 @@ if __name__ == '__main__':
                        hslice_val=1.0,
                        vslice_val=2.75,
                        figsize=(6.0, 6.0)
-                      )
+                       )
     p2d.fig.savefig("imshow_slices.png", bbox_inches='tight')
