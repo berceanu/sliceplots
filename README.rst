@@ -65,8 +65,7 @@ Generate a quick slice plot:
         )
         p2d.fig.savefig("imshow_slices.png")
 
-
-.. image:: ./tests/baseline/imshow_slices.png
+.. image:: https://raw.githubusercontent.com/berceanu/sliceplots/master/tests/baseline/imshow_slices.png
 
 Credits
 -------
