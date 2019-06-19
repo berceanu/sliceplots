@@ -12,7 +12,7 @@ History
 
 * Added regression tests, usage and docstrings.
 
-0.1.1 (2019-06-19)
+0.1.2 (2019-06-19)
 ------------------
 
 * Fixed label positions and colors.
