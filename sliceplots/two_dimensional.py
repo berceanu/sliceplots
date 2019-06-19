@@ -2,6 +2,7 @@
 
 """Main containing useful 2D plotting abstractions on top of matplotlib."""
 
+import matplotlib.transforms as transforms
 import numpy as np
 from matplotlib.artist import setp, getp
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
@@ -157,12 +158,11 @@ class Plot2D:
             #
             self.ax0.axhline(y=self.v_axis[self.hslice_idx], **hslice_opts)
             #
-            self.ax0.annotate(
-                "{:.1f}".format(self.v_axis[self.hslice_idx]),
-                xy=(self.h_axis[3], self.v_axis[self.hslice_idx + 3]),
-                xycoords="data",
-                color=hslice_opts["color"],
-            )
+            trans = transforms.blended_transform_factory(
+                self.ax0.get_yticklabels()[0].get_transform(), self.ax0.transData)
+            self.ax0.text(0, self.v_axis[self.hslice_idx], "{:.1f}".format(self.v_axis[self.hslice_idx]),
+                          color=hslice_opts["color"], transform=trans,
+                          ha="right", va="center")
             #
             self.axh.set_xmargin(0)
             self.axh.set_ylabel(self.label["z"])
@@ -186,13 +186,11 @@ class Plot2D:
             #
             self.ax0.axvline(x=self.h_axis[self.vslice_idx], **vslice_opts)
             #
-            self.ax0.annotate(
-                "{:.1f}".format(self.h_axis[self.vslice_idx]),
-                xy=(self.h_axis[self.vslice_idx - 40], self.v_axis[-40]),
-                xycoords="data",
-                color=vslice_opts["color"],
-                rotation="vertical",
-            )
+            trans = transforms.blended_transform_factory(
+                self.ax0.transData, self.ax0.get_xticklabels()[0].get_transform())
+            self.ax0.text(self.h_axis[self.vslice_idx], 0, "{:.1f}".format(self.h_axis[self.vslice_idx]),
+                          color=vslice_opts["color"], transform=trans,
+                          ha="center", va="top")
             #
             self.axv.set_ymargin(0)
             self.axv.set_xlabel(self.label["z"])
@@ -218,20 +216,17 @@ class Plot2D:
             self.ax0.axhline(y=self.v_axis[self.hslice_idx], **hslice_opts)  # ##----##
             self.ax0.axvline(x=self.h_axis[self.vslice_idx], **vslice_opts)  # ## | ##
             # --- #
-            self.ax0.annotate(
-                "{:.1f}".format(self.v_axis[self.hslice_idx]),
-                xy=(self.h_axis[3], self.v_axis[self.hslice_idx + 3]),
-                xycoords="data",
-                color=hslice_opts["color"],
-            )
+            trans = transforms.blended_transform_factory(
+                self.ax0.get_yticklabels()[0].get_transform(), self.ax0.transData)
+            self.ax0.text(0, self.v_axis[self.hslice_idx], "{:.1f}".format(self.v_axis[self.hslice_idx]),
+                          color=hslice_opts["color"], transform=trans,
+                          ha="right", va="center")
             # | #
-            self.ax0.annotate(
-                "{:.1f}".format(self.h_axis[self.vslice_idx]),
-                xy=(self.h_axis[self.vslice_idx - 40], self.v_axis[-40]),
-                xycoords="data",
-                color=vslice_opts["color"],
-                rotation="vertical",
-            )
+            trans = transforms.blended_transform_factory(
+                self.ax0.transData, self.ax0.get_xticklabels()[0].get_transform())
+            self.ax0.text(self.h_axis[self.vslice_idx], 0, "{:.1f}".format(self.h_axis[self.vslice_idx]),
+                          color=vslice_opts["color"], transform=trans,
+                          ha="center", va="top")
             # --- #
             self.axh.set_xmargin(0)  # otherwise ax0 may have white margins
             self.axh.set_ylabel(self.label["z"])
@@ -264,7 +259,7 @@ class Plot2D:
         )
         #
         if self.cbar:
-            cax = inset_axes(self.ax0, width="70%", height="3%", loc=2)
+            cax = inset_axes(self.ax0, width="70%", height="3%", loc=9)
             cbar = self.fig.colorbar(
                 self.im, cax=cax, orientation="horizontal"
             )  # ticks=[self.vmin, self.vmax]
