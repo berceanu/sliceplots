@@ -192,13 +192,18 @@ class Plot2D:
             #
             self.ax0.axvline(x=self.h_axis[self.vslice_idx], **vslice_opts)
             #
-            self.ax0.annotate(
-                "{:.1f}".format(self.h_axis[self.vslice_idx]),
-                xy=(self.h_axis[self.vslice_idx - 40], self.v_axis[-40]),
-                xycoords="data",
-                color=vslice_opts["color"],
-                rotation="vertical",
-            )
+            trans = transforms.blended_transform_factory(
+                self.ax0.transData, self.ax0.get_xticklabels()[0].get_transform())
+            self.ax0.text(self.h_axis[self.vslice_idx], 0, "{:.1f}".format(self.h_axis[self.vslice_idx]), color=vslice_opts["color"], transform=trans,
+                    ha="center", va="top")
+            #
+            # self.ax0.annotate(
+            #     "{:.1f}".format(self.h_axis[self.vslice_idx]),
+            #     xy=(self.h_axis[self.vslice_idx - 40], self.v_axis[-40]),
+            #     xycoords="data",
+            #     color=vslice_opts["color"],
+            #     rotation="vertical",
+            # )
             #
             self.axv.set_ymargin(0)
             self.axv.set_xlabel(self.label["z"])
@@ -236,13 +241,18 @@ class Plot2D:
             #     color=hslice_opts["color"],
             # )
             # | #
-            self.ax0.annotate(
-                "{:.1f}".format(self.h_axis[self.vslice_idx]),
-                xy=(self.h_axis[self.vslice_idx - 40], self.v_axis[-40]),
-                xycoords="data",
-                color=vslice_opts["color"],
-                rotation="vertical",
-            )
+            trans = transforms.blended_transform_factory(
+                self.ax0.transData, self.ax0.get_xticklabels()[0].get_transform())
+            self.ax0.text(self.h_axis[self.vslice_idx], 0, "{:.1f}".format(self.h_axis[self.vslice_idx]), color=vslice_opts["color"], transform=trans,
+                    ha="center", va="top")
+            #
+            # self.ax0.annotate(
+            #     "{:.1f}".format(self.h_axis[self.vslice_idx]),
+            #     xy=(self.h_axis[self.vslice_idx - 40], self.v_axis[-40]),
+            #     xycoords="data",
+            #     color=vslice_opts["color"],
+            #     rotation="vertical",
+            # )
             # --- #
             self.axh.set_xmargin(0)  # otherwise ax0 may have white margins
             self.axh.set_ylabel(self.label["z"])
