@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Main containing useful 2D plotting abstractions on top of matplotlib."""
+"""Module containing useful 2D plotting abstractions on top of matplotlib."""
 
 import matplotlib.transforms as transforms
 import numpy as np

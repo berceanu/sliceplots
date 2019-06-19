@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Main containing useful 1D plotting abstractions on top of matplotlib."""
+"""Module containing useful 1D plotting abstractions on top of matplotlib."""
 
 import numpy as np
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
