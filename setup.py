@@ -21,7 +21,7 @@ setup(
     author="Andrei Berceanu",
     author_email='andreicberceanu@gmail.com',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
