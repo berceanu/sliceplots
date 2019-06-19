@@ -15,7 +15,7 @@ if __name__ == '__main__':
                        xlabel='x',
                        ylabel='y',
                        zlabel='f(x,y)',
-                       hslice_val=1.0,
+                       hslice_val=0.75,
                        vslice_val=2.75,
                        figsize=(6.0, 6.0)
                        )
