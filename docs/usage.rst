@@ -25,7 +25,7 @@ here is an example of a "broken-axis" plot::
 
 .. image:: ../tests/baseline/test_plot1d_break_x.png
 
-The :py:class:`Plot1D` class is a very thin wrapper around :py:func:`matplotlib.axes.Axes.plot`::
+The :py:class:`sliceplots.one_dimensional.Plot1D` class is a very thin wrapper around :py:meth:`matplotlib.axes.Axes.plot`::
 
     p1d = one_d.Plot1D(uu,
                        data[data.shape[0] // 2, :],
@@ -39,7 +39,7 @@ The :py:class:`Plot1D` class is a very thin wrapper around :py:func:`matplotlib.
 
 .. image:: ../tests/baseline/test_plot1d.png
 
-Finally, to use the 2D interface::
+While :py:class:`sliceplots.two_dimensional.Plot2D` wraps :py:meth:`matplotlib.axes.Axes.imshow`::
 
     import sliceplots.two_dimensional as two_d
 

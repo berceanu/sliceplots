@@ -71,7 +71,7 @@ class Plot1D:
     :type xlabel: str
     :param ylabel: y-axis label
     :type ylabel: str
-    :param kwargs: other arguments for :py:func:`matplotlib.plot`
+    :param kwargs: other arguments for :py:meth:`matplotlib.axes.Axes.plot`
     """
 
     def __init__(self, h_axis, v_axis, xlabel=r"", ylabel=r"", **kwargs):
