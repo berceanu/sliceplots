@@ -134,7 +134,7 @@ class Plot2D:
         self.ax0.set_ylabel(self.label["y"])
 
     def draw_fig(self, **kwargs):
-        slice_opts = {"ls": "-", "color": "red", "lw": 1.0}  # defaults
+        slice_opts = {"ls": "-", "color": "#ff7f0e", "lw": 1.5}  # defaults
         hslice_opts = slice_opts.copy()
         vslice_opts = slice_opts.copy()
         #
@@ -260,7 +260,7 @@ class Plot2D:
         # self.fig.tight_layout()
         #
         self.ax0.text(
-            0.02, 0.02, self.text, transform=self.ax0.transAxes, color="firebrick"
+            0.02, 0.02, self.text, transform=self.ax0.transAxes, color="#ff7f0e"
         )
         #
         if self.cbar:
@@ -268,16 +268,18 @@ class Plot2D:
             cbar = self.fig.colorbar(
                 self.im, cax=cax, orientation="horizontal"
             )  # ticks=[self.vmin, self.vmax]
-            # cbar.set_label(self.label['z'], color='firebrick')
-            self.ax0.text(
-                0.74,
-                0.97,
-                self.label["z"],
-                transform=self.ax0.transAxes,
-                color="firebrick",
-            )
-            # cbar.ax.xaxis.set_ticks_position('top')
-            # cbar.ax.xaxis.set_label_position('top')
-            cbar.ax.tick_params(color="firebrick", width=1.5, labelsize=8)
+            cbar.set_label(self.label['z'], color='#ff7f0e')
+            # self.ax0.text(
+            #     0.74,
+            #     0.97,
+            #     self.label["z"],
+            #     transform=self.ax0.transAxes,
+            #     color="#ff7f0e",
+            # )
+            cbar.ax.xaxis.set_ticks_position('top')
+            cbar.ax.xaxis.set_label_position('top')
+            cbar.ax.tick_params(color="#ff7f0e", width=1.5, labelsize=8)
             cbxtick_obj = getp(cbar.ax.axes, "xticklabels")
-            setp(cbxtick_obj, color="firebrick")
+            setp(cbxtick_obj, color="#ff7f0e")
+
+# todo remove commented code
