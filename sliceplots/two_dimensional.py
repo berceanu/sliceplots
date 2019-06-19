@@ -134,7 +134,7 @@ class Plot2D:
         self.ax0.set_ylabel(self.label["y"])
 
     def draw_fig(self, **kwargs):
-        slice_opts = {"ls": "-", "color": "firebrick", "lw": 0.5}  # defaults
+        slice_opts = {"ls": "-", "color": "red", "lw": 1.0}  # defaults
         hslice_opts = slice_opts.copy()
         vslice_opts = slice_opts.copy()
         #
