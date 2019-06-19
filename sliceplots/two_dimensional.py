@@ -259,7 +259,7 @@ class Plot2D:
         )
         #
         if self.cbar:
-            cax = inset_axes(self.ax0, width="70%", height="3%", loc=2)
+            cax = inset_axes(self.ax0, width="70%", height="3%", loc=9)
             cbar = self.fig.colorbar(
                 self.im, cax=cax, orientation="horizontal"
             )  # ticks=[self.vmin, self.vmax]
