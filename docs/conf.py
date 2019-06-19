@@ -41,9 +41,7 @@ extensions = [
         #'nbsphinx',
         'sphinx.ext.viewcode'
 ]
-
-intersphinx_mapping = {'matplotlib': ('https://matplotlib.org/3.1.0', None)}
-
+intersphinx_mapping = {'matplotlib': ('https://matplotlib.org', None)}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
