@@ -1,6 +1,6 @@
-==========
-sliceplots
-==========
+===========
+Slice Plots
+===========
 
 
 .. image:: https://img.shields.io/pypi/v/sliceplots.svg
