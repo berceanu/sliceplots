@@ -47,7 +47,6 @@ Generate a quick slice plot:
 
 .. code-block:: python
 
-    import numpy as np
     import sliceplots.two_dimensional as two_d
 
     axis_data = np.linspace(0, np.pi, 128)
