@@ -29,7 +29,8 @@ here is an example of a "broken-axis" plot:
 
 .. image:: ../tests/baseline/test_plot1d_break_x.png
 
-The :py:class:`sliceplots.one_dimensional.Plot1D` class is a very thin wrapper around :py:meth:`matplotlib.axes.Axes.plot`:
+The :py:class:`sliceplots.one_dimensional.Plot1D` class is a very thin wrapper \
+around :py:meth:`matplotlib.axes.Axes.plot`:
 
 .. jupyter-execute::
 
@@ -45,7 +46,9 @@ The :py:class:`sliceplots.one_dimensional.Plot1D` class is a very thin wrapper a
 
 .. image:: ../tests/baseline/test_plot1d.png
 
-While :py:class:`sliceplots.two_dimensional.Plot2D` wraps :py:meth:`matplotlib.axes.Axes.imshow`::
+While :py:class:`sliceplots.two_dimensional.Plot2D` wraps :py:meth:`matplotlib.axes.Axes.imshow`:
+
+.. jupyter-execute::
 
     import sliceplots.two_dimensional as two_d
 
@@ -66,11 +69,11 @@ While :py:class:`sliceplots.two_dimensional.Plot2D` wraps :py:meth:`matplotlib.a
                        vmin=-1.0,
                        vmax=1.0,
                        text='your text here')
-    p2d.fig.savefig("test_plot2d.png", bbox_inches='tight')
+    p2d.fig.savefig("plot2d.png", bbox_inches='tight')
 
 .. image:: ../tests/baseline/test_plot2d.png
 
-Different data normalization functions from :py:mod:`matplotlib.colors` can be
-used, by passing :code:`norm=colors.LogNorm()` or
+Different data normalization functions from :py:mod:`matplotlib.colors` can be \
+used, by passing :code:`norm=colors.LogNorm()` or \
 :code:`norm=colors.SymLogNorm(linthresh=1e-4)`.
 
