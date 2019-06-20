@@ -61,9 +61,7 @@ Generate a quick slice plot:
             ylabel="y",
             zlabel="f(x,y)",
             hslice_val=0.75,
-            vslice_val=2.75,
-        )
-        p2d.fig.savefig("imshow_slices.png")
+            vslice_val=2.75)
 
 .. image:: https://raw.githubusercontent.com/berceanu/sliceplots/master/tests/baseline/imshow_slices.png
 
