@@ -33,9 +33,9 @@ Here is an example of a "broken-axis" plot
             "xlim_left": (0, 1),
             "xlim_right": (2, 3),
             "xlabel": r"$x$ ($\mu$m)",
-            "ylabel": r"$\rho$ (cm$^{-3}$)",
+            "ylabel": r"$\rho$ (cm${}^{-3}$)",
         },
-        {"ls": "--", "color": "red"},
+        {"ls": "--", "color": "#d62728"},
     )
 
 The :py:class:`sliceplots.one_dimensional.Plot1D` class is a very thin wrapper \
@@ -46,12 +46,12 @@ around :py:meth:`matplotlib.axes.Axes.plot`.
     p1d = one_d.Plot1D(
         uu,
         data[data.shape[0] // 2, :],
-        xlabel=r"$%s \;(\mu m)$" % "z",
-        ylabel=r"$%s$" % "a_0",
+        xlabel=r"$z$ ($\mu$m)",
+        ylabel=r"$a_0$",
         xlim=[0, 3],
         ylim=[-1, 1],
         figsize=(6.4, 4.0),
-        color="red",
+        color="#d62728",
     )
     p1d.fig  # show the figure
 
@@ -65,10 +65,10 @@ while :py:class:`sliceplots.two_dimensional.Plot2D` wraps :py:meth:`matplotlib.a
         uu,
         xlabel=r"$x$ ($\mu$m)",
         ylabel=r"$y$ ($\mu$m)",
-        zlabel=r"$\rho$ (cm$^{-3}$)",
+        zlabel=r"$\rho$ (cm${}^{-3}$)",
         hslice_val=0.75,
         vslice_val=2.75,
-        hslice_opts={"color": "#1f77b4", "lw": 0.5, "ls": "-"},
+        hslice_opts={"color": "#1f77b4", "lw": 1.5, "ls": "-"},
         vslice_opts={"color": "#d62728", "ls": "-"},
         figsize=(8, 8),
         cmap="viridis",
