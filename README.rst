@@ -67,8 +67,8 @@ Generate a quick slice plot:
 
 .. image:: https://raw.githubusercontent.com/berceanu/sliceplots/master/tests/baseline/imshow_slices.png
 
-Credits
--------
+Credit
+------
 
 Big thanks to `@afvincent`_ for `his gist`_.
 
