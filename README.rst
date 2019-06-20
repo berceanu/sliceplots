@@ -47,21 +47,21 @@ Generate a quick slice plot:
 
 .. code-block:: python
 
-import numpy as np
-import sliceplots.two_dimensional as two_d
+        import numpy as np
+        import sliceplots.two_dimensional as two_d
 
-axis_data = np.linspace(0, np.pi, 128)
-data_2d = np.cos(axis_data - 0.5) * np.cos(axis_data.reshape(-1, 1) - 1.0)
+        axis_data = np.linspace(0, np.pi, 128)
+        data_2d = np.cos(axis_data - 0.5) * np.cos(axis_data.reshape(-1, 1) - 1.0)
 
-two_d.Plot2D(
-    data_2d,
-    axis_data,  # horiz. axis
-    axis_data,  # vert. axis
-    xlabel="x",
-    ylabel="y",
-    zlabel="f(x,y)",
-    hslice_val=0.75,
-    vslice_val=2.75,
-)
+        two_d.Plot2D(
+        data_2d,
+        axis_data,  # horiz. axis
+        axis_data,  # vert. axis
+        xlabel="x",
+        ylabel="y",
+        zlabel="f(x,y)",
+        hslice_val=0.75,
+        vslice_val=2.75,
+        )
 
 .. image:: https://raw.githubusercontent.com/berceanu/sliceplots/master/tests/baseline/imshow_slices.png
