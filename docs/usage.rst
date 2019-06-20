@@ -7,7 +7,17 @@ To use ``sliceplots`` in a project, we first import it and generate some data:
 .. jupyer-execute::
 
     import numpy as np
-    import matplotlib.pyplot as plt
+    from matplotlib import pyplot
+    %matplotlib inline
+
+    x = np.linspace(0, 2 * np.pi)
+
+    pyplot.plot(x, np.sin(x) / x)
+    pyplot.plot(x, np.cos(x))
+    pyplot.grid()
+
+.. jupyer-execute::
+
     import sliceplots.one_dimensional as one_d
 
     # data for plotting
@@ -18,7 +28,7 @@ here is an example of a "broken-axis" plot:
 
 .. jupyter-execute::
 
-    fig, ax = plt.subplots(figsize=(8, 3.2))
+    fig, ax = pyplot.subplots(figsize=(8, 3.2))
     one_d.plot1d_break_x(fig, uu, data[data.shape[0] // 2, :],
                             {'xlim_left': (0, 1),
                             'xlim_right': (2, 3),
