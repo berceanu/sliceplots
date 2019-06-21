@@ -11,7 +11,7 @@ from matplotlib.gridspec import GridSpec
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
-from .util import idx_from_val
+from ._util import idx_from_val
 
 
 class Plot2D:

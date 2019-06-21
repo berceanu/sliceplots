@@ -7,7 +7,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-from .util import idx_from_val
+from ._util import idx_from_val
 
 
 def plot1d_break_x(fig, h_axis, v_axis, param, slice_opts):
