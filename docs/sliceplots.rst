@@ -20,14 +20,6 @@ sliceplots.two\_dimensional module
    :undoc-members:
    :show-inheritance:
 
-sliceplots.util module
-----------------------
-
-.. automodule:: sliceplots.util
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 
 Module contents
 ---------------
