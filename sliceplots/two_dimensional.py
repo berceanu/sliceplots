@@ -59,7 +59,6 @@ class Plot2D:
         #
         self.h_axis = h_axis[xmin_idx:xmax_idx]
         self.v_axis = v_axis[ymin_idx:ymax_idx]
-        # np.clip(self.data, self.vmin, self.vmax, self.data)
         #
         self.label = {"x": xlabel, "y": ylabel, "z": zlabel}
         #
@@ -75,7 +74,6 @@ class Plot2D:
             self.hslice_idx = idx_from_val(self.v_axis, self.hslice_val)
         if self.vslice_val is not None:
             self.vslice_idx = idx_from_val(self.h_axis, self.vslice_val)
-            #
         #
         self.text = kwargs.get("text", "")
         #
@@ -232,7 +230,6 @@ class Plot2D:
             self.axh.set_ylabel(self.label["z"])
             self.axh.plot(self.h_axis, self.data[self.hslice_idx, :], **hslice_opts)
             self.axh.set_ylim(self.vmin, self.vmax)
-            # self.axh.set_yticks([-1, 0, 1])
             # | #
             self.axv.set_ymargin(0)
             self.axv.set_xlabel(self.label["z"])
@@ -251,8 +248,6 @@ class Plot2D:
                     ax.spines[sp].set_visible(False)
             #
             self.fig.subplots_adjust(wspace=0.03, hspace=0.03)
-
-        # self.fig.tight_layout()
         #
         self.ax0.text(
             0.02, 0.02, self.text, transform=self.ax0.transAxes, color="#ff7f0e"
@@ -262,19 +257,10 @@ class Plot2D:
             cax = inset_axes(self.ax0, width="70%", height="3%", loc=9)
             cbar = self.fig.colorbar(
                 self.im, cax=cax, orientation="horizontal"
-            )  # ticks=[self.vmin, self.vmax]
+            )
             cbar.set_label(self.label['z'], color='#ff7f0e')
-            # self.ax0.text(
-            #     0.74,
-            #     0.97,
-            #     self.label["z"],
-            #     transform=self.ax0.transAxes,
-            #     color="#ff7f0e",
-            # )
             cbar.ax.xaxis.set_ticks_position('top')
             cbar.ax.xaxis.set_label_position('top')
             cbar.ax.tick_params(color="#ff7f0e", width=1.5, labelsize=8)
             cbxtick_obj = getp(cbar.ax.axes, "xticklabels")
             setp(cbxtick_obj, color="#ff7f0e")
-
-# todo remove commented code
