@@ -44,6 +44,7 @@ def test_plot2d_2slices(plt_data):
 
     return p2d.fig
 
+
 @pytest.mark.mpl_image_compare(style='mpl20', savefig_kwargs={'bbox_inches': 'tight'})
 def test_plot2d_horiz_slice(plt_data):
     """Checks ``Plot2D`` class."""
@@ -65,6 +66,7 @@ def test_plot2d_horiz_slice(plt_data):
                        )
 
     return p2d.fig
+
 
 @pytest.mark.mpl_image_compare(style='mpl20', savefig_kwargs={'bbox_inches': 'tight'})
 def test_plot2d_vert_slice(plt_data):
@@ -88,6 +90,7 @@ def test_plot2d_vert_slice(plt_data):
 
     return p2d.fig
 
+
 @pytest.mark.mpl_image_compare(style='mpl20', savefig_kwargs={'bbox_inches': 'tight'})
 def test_plot2d_no_slices(plt_data):
     """Checks ``Plot2D`` class."""
@@ -107,8 +110,6 @@ def test_plot2d_no_slices(plt_data):
                        )
 
     return p2d.fig
-
-
 
 # todo directly use matplotlib's own testing facilities once 3.2.0 is released
 #       see https://matplotlib.org/3.1.0/devel/testing.html
