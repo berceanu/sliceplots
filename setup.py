@@ -30,6 +30,7 @@ setup(
     ],
     description="thin wrapper on top of matplotlib's imshow for 2D plotting with attached slice plots",
     install_requires=requirements,
+    python_requires = '>= 3.6',
     license="BSD license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,

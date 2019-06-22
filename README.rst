@@ -24,7 +24,6 @@ Slice Plots
 .. image:: https://mybinder.org/badge_logo.svg
  :target: https://mybinder.org/v2/gh/berceanu/sliceplots/bda060663a197d31caa2deacfac68adb7c687690?filepath=examples%2Fsliceplots.ipynb
 
-
 thin wrapper on top of ``matplotlib``'s ``.imshow()`` for 2D plotting, with attached slice plots
 
 
@@ -38,6 +37,8 @@ Features
 * uses its pure OO (look Ma, no ``pyplot``!) interface
 * support for 1D and 2D plots with various customization options
 * broken-axis 1D plots
+* small codebase
+* designed for non-interactive use, scripting and publication-quality plots
 
 Quick start
 -----------
