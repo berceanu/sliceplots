@@ -18,7 +18,8 @@ Slice Plots
      :target: https://pyup.io/repos/github/berceanu/sliceplots/
      :alt: Updates
 
-
+.. image:: https://codecov.io/gh/berceanu/sliceplots/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/berceanu/sliceplots
 
 thin wrapper on top of ``matplotlib``'s ``.imshow()`` for 2D plotting, with attached slice plots
 
