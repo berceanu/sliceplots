@@ -21,6 +21,8 @@ Slice Plots
 .. image:: https://codecov.io/gh/berceanu/sliceplots/branch/master/graph/badge.svg
   :target: https://codecov.io/gh/berceanu/sliceplots
 
+.. image:: https://img.shields.io/pypi/l/sliceplots.svg   :alt: PyPI - License
+
 .. image:: https://mybinder.org/badge_logo.svg
  :target: https://mybinder.org/v2/gh/berceanu/sliceplots/bda060663a197d31caa2deacfac68adb7c687690?filepath=examples%2Fsliceplots.ipynb
 
