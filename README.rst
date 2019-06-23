@@ -26,7 +26,7 @@ Slice Plots
 
 
 .. image:: https://img.shields.io/pypi/l/sliceplots.svg
-   :target https://github.com/berceanu/sliceplots/blob/master/LICENSE
+   :target: https://github.com/berceanu/sliceplots/blob/master/LICENSE
    :alt: PyPI - License
 
 
