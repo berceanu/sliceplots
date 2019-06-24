@@ -3,7 +3,7 @@ Usage
 =====
 
 .. jupyter-kernel::
-  :id: sliceplots
+  :id: sliceplots_usage
 
 To use ``sliceplots`` in a project, we first import the necessary modules
 
@@ -87,5 +87,5 @@ Different data normalization functions from :py:mod:`matplotlib.colors` can be \
 used, by passing :code:`norm=colors.LogNorm()` or \
 :code:`norm=colors.SymLogNorm(linthresh=1e-4)`.
 
-You can download all the code from this document as a Python script :jupyter-download:script:`sliceplots` \
-or as a Jupyter notebook :jupyter-download:notebook:`sliceplots`.
+You can download all the code from this document as a Python script :jupyter-download:script:`sliceplots_usage` \
+or as a Jupyter notebook :jupyter-download:notebook:`sliceplots_usage`.
