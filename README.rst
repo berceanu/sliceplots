@@ -80,3 +80,9 @@ Generate a quick slice plot:
     )
 
 .. image:: https://raw.githubusercontent.com/berceanu/sliceplots/master/tests/baseline/imshow_slices.png
+
+Run the ``sliceplots`` example notebook `live on
+Binder <https://mybinder.org/v2/gh/berceanu/sliceplots/bda060663a197d31caa2deacfac68adb7c687690?filepath=examples%2Fsliceplots.ipynb
+>`_
+to see examples of how to use ``sliceplots`` or visit the
+`tutorial on Read the Docs <https://sliceplots.readthedocs.io/en/latest/usage.html>`__.
