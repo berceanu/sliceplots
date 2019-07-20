@@ -21,33 +21,40 @@ def plt_data():
     return PlottingData(uu=uu, data=data, idx=data.shape[0] // 2)
 
 
-@pytest.mark.mpl_image_compare(style='mpl20', savefig_kwargs={'bbox_inches': 'tight'})
+@pytest.mark.mpl_image_compare(style="mpl20", savefig_kwargs={"bbox_inches": "tight"})
 def test_plot1d_break_x(plt_data):
     """Checks broken x-axis plot."""
 
     fig, ax = plt.subplots(figsize=(8, 3.2))
 
-    one_d.plot1d_break_x(fig, plt_data.uu, plt_data.data[plt_data.idx, :],
-                         {'xlim_left': (0, 1),
-                          'xlim_right': (2, 3),
-                          'xlabel': r'$x$ ($\mu$m)',
-                          'ylabel': r'$\rho$ (cm$^{-3}$)'},
-                         {'ls': '--',
-                          'color': 'red'})
+    one_d.plot1d_break_x(
+        fig,
+        plt_data.uu,
+        plt_data.data[plt_data.idx, :],
+        {
+            "xlim_left": (0, 1),
+            "xlim_right": (2, 3),
+            "xlabel": r"$x$ ($\mu$m)",
+            "ylabel": r"$\rho$ (cm$^{-3}$)",
+        },
+        {"ls": "--", "color": "red"},
+    )
 
     return fig
 
 
-@pytest.mark.mpl_image_compare(style='mpl20', savefig_kwargs={'bbox_inches': 'tight'})
+@pytest.mark.mpl_image_compare(style="mpl20", savefig_kwargs={"bbox_inches": "tight"})
 def test_plot1d(plt_data):
     """Checks ``Plot1D`` class."""
-    p1d = one_d.Plot1D(plt_data.uu,
-                       plt_data.data[plt_data.idx, :],
-                       xlabel=r'$%s \;(\mu m)$' % 'z',
-                       ylabel=r'$%s$' % 'a_0',
-                       xlim=[0, 3],
-                       ylim=[-1, 1],
-                       figsize=(10, 6),
-                       color='red')
+    p1d = one_d.Plot1D(
+        plt_data.uu,
+        plt_data.data[plt_data.idx, :],
+        xlabel=r"$%s \;(\mu m)$" % "z",
+        ylabel=r"$%s$" % "a_0",
+        xlim=[0, 3],
+        ylim=[-1, 1],
+        figsize=(10, 6),
+        color="red",
+    )
 
     return p1d.fig
