@@ -1,6 +1,18 @@
 # -*- coding: utf-8 -*-
 
-"""Top-level package for sliceplots."""
+"""Top-level package for sliceplots.
+
+The following functions and classes are importable from the
+top-level ``sliceplots`` namespace:
+
+* :class:`sliceplots.two_dimensional.Plot2D`
+* :class:`sliceplots.one_dimensional.Plot1D`
+* :func:`sliceplots.one_dimensional.plot1d_break_x`
+* :func:`sliceplots.util.addcolorbar`
+"""
+from sliceplots.util import addcolorbar  # NOQA: F401
+from sliceplots.one_dimensional import plot1d_break_x, Plot1D  # NOQA: F401
+from sliceplots.two_dimensional import Plot2D  # NOQA: F401
 
 __author__ = """Andrei Berceanu"""
 __email__ = "andreicberceanu@gmail.com"
