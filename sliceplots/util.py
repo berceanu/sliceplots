@@ -40,23 +40,31 @@ def addcolorbar(
 
     Examples
     --------
-    >>> import numpy as np
-    >>> uu = np.linspace(0, np.pi, 128)
-    >>> data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
-    >>> fig = Figure()
-    >>> ax = fig.add_subplot(111)
-    >>> img = ax.imshow(data)
-    >>> addcolorbar(ax, img)  #doctest: +ELLIPSIS
-    <matplotlib.axes._axes.Axes object at 0x...>
+    .. plot::
+       :include-source:
+
+        import numpy as np
+        from matplotlib import pyplot
+
+        from sliceplots import addcolorbar
+
+        uu = np.linspace(0, np.pi, 128)
+        data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
+
+        fig = pyplot.figure()
+        ax = fig.add_subplot(111)
+        img = ax.imshow(data)
+
+        addcolorbar(ax, img)
+        fig
     """
-    fig = ax.figure
     divider = make_axes_locatable(ax)
     cax = divider.append_axes(pos, size=size, pad=pad)
     if stub:
         cax.set_visible(False)
         return cax
 
-    cb = fig.colorbar(im, cax=cax, orientation=orientation)
+    cb = ax.figure.colorbar(im, cax=cax, orientation=orientation)
     if max_ticks is not None:
         from matplotlib import ticker
 
