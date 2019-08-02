@@ -5,10 +5,10 @@
 import matplotlib.transforms as transforms
 import numpy as np
 from matplotlib.artist import setp, getp
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-from matplotlib.figure import Figure
 from matplotlib.gridspec import GridSpec
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
 
 from sliceplots.util import _idx_from_val
 
@@ -39,9 +39,10 @@ class Plot2D:
     >>> uu = np.linspace(0, np.pi, 128)
     >>> data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
     >>> p2d = Plot2D(
-    ...     data,
-    ...     uu,
-    ...     uu,
+    ...     ax=None,
+    ...     arr2d=data,
+    ...     h_axis=uu,
+    ...     v_axis=uu,
     ...     xlabel=r"$x$ ($\mu$m)",
     ...     ylabel=r"$y$ ($\mu$m)",
     ...     zlabel=r"$\rho$ (cm${}^{-3}$)",
@@ -49,7 +50,6 @@ class Plot2D:
     ...     vslice_val=2.75,
     ...     hslice_opts={"color": "#1f77b4", "lw": 1.5, "ls": "-"},
     ...     vslice_opts={"color": "#d62728", "ls": "-"},
-    ...     figsize=(8, 8),
     ...     cmap="viridis",
     ...     cbar=True,
     ...     extent=(0, np.pi, 0, np.pi),
@@ -58,12 +58,20 @@ class Plot2D:
     ...     text="your text here",
     ... )
     >>> p2d.fig  #doctest: +ELLIPSIS
-    <Figure size ... with 4 Axes>
+    <Figure size ... with 5 Axes>
 
     """
 
     def __init__(
-        self, arr2d, h_axis, v_axis, xlabel=r"", ylabel=r"", zlabel=r"", **kwargs
+        self,
+        arr2d,
+        h_axis,
+        v_axis,
+        xlabel=r"",
+        ylabel=r"",
+        zlabel=r"",
+        fig=None,
+        **kwargs,
     ):
         self.extent = kwargs.get(
             "extent", (np.min(h_axis), np.max(h_axis), np.min(v_axis), np.max(v_axis))
@@ -100,7 +108,11 @@ class Plot2D:
         #
         self.text = kwargs.get("text", "")
         #
-        self.fig = Figure(figsize=kwargs.pop("figsize", (8, 8)))
+        if fig is None:
+            fig = Figure()
+
+        self.fig = fig
+        self.canvas = FigureCanvas(self.fig)
         # A canvas must be manually attached to the figure (pyplot would automatically
         # do it).  This is done by instantiating the canvas with the figure as
         # argument.
@@ -111,7 +123,7 @@ class Plot2D:
         self.axh = None  # horizontal slice axes
         self.axv = None  # vertical slice axes
 
-        self.canvas = FigureCanvas(self.fig)
+        self.canvas = self.fig.canvas
         #
         self.draw_fig(**kwargs)
 

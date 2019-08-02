@@ -29,10 +29,25 @@ def addcolorbar(
     im : :py:class:`matplotlib.image.AxesImage`
         The image (return value of ax.imshow(...)).
 
+    Returns
+    -------
+    cax : :py:class:`matplotlib.axes.Axes`
+        New axes instance, with attached colorbar.
+
     Notes
     -----
     When changed, please update `this gist <https://gist.github.com/skuschel/85f0645bd6e37509164510290435a85a>`_.
 
+    Examples
+    --------
+    >>> import numpy as np
+    >>> uu = np.linspace(0, np.pi, 128)
+    >>> data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
+    >>> fig = Figure()
+    >>> ax = fig.add_subplot(111)
+    >>> img = ax.imshow(data)
+    >>> addcolorbar(ax, img)  #doctest: +ELLIPSIS
+    <matplotlib.axes._axes.Axes object at 0x...>
     """
     fig = ax.figure
     divider = make_axes_locatable(ax)

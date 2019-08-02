@@ -37,15 +37,16 @@ def plot1d_break_x(h_axis, v_axis, param, slice_opts, ax=None):
     >>> uu = np.linspace(0, np.pi, 128)
     >>> data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
     >>> plot1d_break_x(
-    ...     uu,
-    ...     data[data.shape[0] // 2, :],
-    ...     {
+    ...     ax=None,
+    ...     h_axis=uu,
+    ...     v_axis=data[data.shape[0] // 2, :],
+    ...     param={
     ...         "xlim_left": (0, 1),
     ...         "xlim_right": (2, 3),
     ...         "xlabel": r"$x$ ($\mu$m)",
     ...         "ylabel": r"$\rho$ (cm${}^{-3}$)",
     ...     },
-    ...     {"ls": "--", "color": "#d62728"})  #doctest: +ELLIPSIS
+    ...     slice_opts={"ls": "--", "color": "#d62728"})  #doctest: +ELLIPSIS
     <Figure size ... with 2 Axes>
 
     """
@@ -115,8 +116,9 @@ class Plot1D:
     >>> uu = np.linspace(0, np.pi, 128)
     >>> data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
     >>> p1d = Plot1D(
-    ...     uu,
-    ...     data[data.shape[0] // 2, :],
+    ...     ax=None,
+    ...     h_axis=uu,
+    ...     v_axis=data[data.shape[0] // 2, :],
     ...     xlabel=r"$z$ ($\mu$m)",
     ...     ylabel=r"$a_0$",
     ...     xlim=[0, 3],

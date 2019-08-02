@@ -60,19 +60,24 @@ Generate a quick slice plot:
 .. plot::
    :include-source:
 
-    from sliceplots import Plot2D
+        import numpy as np
+        from matplotlib import pyplot
+        from sliceplots import Plot2D
 
-    axis_data = np.linspace(0, np.pi, 128)
-    data_2d = np.cos(axis_data - 0.5) * np.cos(axis_data.reshape(-1, 1) - 1.0)
-
-    Plot2D(
-        data_2d,
-        axis_data,  # horiz. axis
-        axis_data,  # vert. axis
-        xlabel="x",
-        ylabel="y",
-        zlabel="f(x,y)",
-        hslice_val=0.75,
-        vslice_val=2.75,
-    )
+        axis_data = np.linspace(0, np.pi, 128)
+        data_2d = np.cos(axis_data - 0.5) * np.cos(axis_data.reshape(-1, 1) - 1.0)
+        
+        fig = plt.figure(figsize=(8,8))
+        slices = Plot2D(
+                    fig=fig,
+                    arr2d=data_2d,
+                    h_axis=axis_data,
+                    v_axis=axis_data,
+                    xlabel="x",
+                    ylabel="y",
+                    zlabel="f(x,y)",
+                    hslice_val=0.75,
+                    vslice_val=2.75,
+        )
+        slices.fig
 
