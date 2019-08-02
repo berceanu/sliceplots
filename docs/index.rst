@@ -1,14 +1,13 @@
-Welcome to sliceplots's documentation!
-======================================
+sliceplots
+==========
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
 
    readme
    installation
-   usage
-   modules
+   API Documentation <modules/sliceplots>
    contributing
    authors
    history

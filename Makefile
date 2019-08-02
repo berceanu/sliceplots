@@ -57,12 +57,9 @@ test: ## run tests quickly with the default Python
 	py.test
 
 test-all: ## run tests on every Python version with tox
-	tox
+	tox -vvv
 
 docs: ## generate Sphinx HTML documentation, including API docs
-	rm -f docs/sliceplots.rst
-	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ sliceplots
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	$(BROWSER) docs/_build/html/index.html
