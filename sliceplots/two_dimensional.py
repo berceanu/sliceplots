@@ -8,28 +8,58 @@ from matplotlib.artist import setp, getp
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.gridspec import GridSpec
-from mpl_toolkits.axes_grid1 import make_axes_locatable
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
-from ._util import idx_from_val
+from sliceplots.util import _idx_from_val
 
 
 class Plot2D:
-    """Pseudo-color plot of a 2D array with optional 1D slices attached.
+    r"""Pseudo-color plot of a 2D array with optional 1D slices attached.
 
-    :param arr2d: data to be plotted
-    :type arr2d: :py:class:`np.ndarray`
-    :param h_axis: values on the "x" axis
-    :type h_axis: :py:class:`np.ndarray`
-    :param v_axis: values on the "y" axis
-    :type v_axis: :py:class:`np.ndarray`
-    :param xlabel: x-axis label
-    :type xlabel: str
-    :param ylabel: y-axis label
-    :type ylabel: str
-    :param zlabel: label for :py:class:`matplotlib.colorbar.Colorbar`
-    :type zlabel: str
-    :param kwargs: other plot options
+    Parameters
+    ----------
+    arr2d: :py:class:`np.ndarray`
+        Data to be plotted.
+    h_axis: :py:class:`np.ndarray`
+        Values on the "x" axis.
+    v_axis: :py:class:`np.ndarray`
+        Values on the "y" axis.
+    xlabel: str
+        x-axis label.
+    ylabel: str
+        y-axis label.
+    zlabel: str
+        Label for :py:class:`matplotlib.colorbar.Colorbar`.
+    kwargs : dict
+        Other plot options.
+
+    Examples
+    --------
+    >>> import numpy as np
+    >>> uu = np.linspace(0, np.pi, 128)
+    >>> data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
+    >>> p2d = Plot2D(
+    ...     data,
+    ...     uu,
+    ...     uu,
+    ...     xlabel=r"$x$ ($\mu$m)",
+    ...     ylabel=r"$y$ ($\mu$m)",
+    ...     zlabel=r"$\rho$ (cm${}^{-3}$)",
+    ...     hslice_val=0.75,
+    ...     vslice_val=2.75,
+    ...     hslice_opts={"color": "#1f77b4", "lw": 1.5, "ls": "-"},
+    ...     vslice_opts={"color": "#d62728", "ls": "-"},
+    ...     figsize=(8, 8),
+    ...     cmap="viridis",
+    ...     cbar=True,
+    ...     extent=(0, np.pi, 0, np.pi),
+    ...     vmin=-1.0,
+    ...     vmax=1.0,
+    ...     text="your text here",
+    ... )
+    >>> p2d.fig  #doctest: +ELLIPSIS
+    <Figure size ... with 4 Axes>
+
     """
 
     def __init__(
@@ -40,8 +70,8 @@ class Plot2D:
         )
         #
         xmin, xmax, ymin, ymax = self.extent
-        xmin_idx, xmax_idx = idx_from_val(h_axis, xmin), idx_from_val(h_axis, xmax)
-        ymin_idx, ymax_idx = idx_from_val(v_axis, ymin), idx_from_val(v_axis, ymax)
+        xmin_idx, xmax_idx = _idx_from_val(h_axis, xmin), _idx_from_val(h_axis, xmax)
+        ymin_idx, ymax_idx = _idx_from_val(v_axis, ymin), _idx_from_val(v_axis, ymax)
         #
         self.data = arr2d[ymin_idx:ymax_idx, xmin_idx:xmax_idx]
         self.min_data, self.max_data = np.amin(self.data), np.amax(self.data)
@@ -64,9 +94,9 @@ class Plot2D:
         self.hslice_idx = None
         self.vslice_idx = None
         if self.hslice_val is not None:
-            self.hslice_idx = idx_from_val(self.v_axis, self.hslice_val)
+            self.hslice_idx = _idx_from_val(self.v_axis, self.hslice_val)
         if self.vslice_val is not None:
-            self.vslice_idx = idx_from_val(self.h_axis, self.vslice_val)
+            self.vslice_idx = _idx_from_val(self.h_axis, self.vslice_val)
         #
         self.text = kwargs.get("text", "")
         #
@@ -94,20 +124,6 @@ class Plot2D:
             np.amin(self.data),
             np.amax(self.data),
         )
-
-    @staticmethod
-    def colorbar(mappable):
-        """Constructs a scaled colorbar for a given plot.
-
-        Parameters
-        ----------
-        mappable : The Image, ContourSet, etc. to which the colorbar applies.
-        """
-        ax = mappable.axes
-        fig = ax.figure
-        divider = make_axes_locatable(ax)
-        cax = divider.append_axes("right", size="5%", pad=0.05)
-        return fig.colorbar(mappable, cax=cax)
 
     def main_panel(self, **kwargs):
         self.im = self.ax0.imshow(

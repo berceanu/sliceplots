@@ -3,30 +3,57 @@
 """Module containing useful 1D plotting abstractions on top of matplotlib."""
 
 import numpy as np
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-from matplotlib.figure import Figure
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-from ._util import idx_from_val
+from sliceplots.util import _idx_from_val, _make_ax
 
 
-def plot1d_break_x(fig, h_axis, v_axis, param, slice_opts):
-    """Line plot with a broken x-axis.
+def plot1d_break_x(h_axis, v_axis, param, slice_opts, ax=None):
+    r"""Line plot with a broken x-axis.
 
-    :param fig: Figure instance
-    :type fig: :py:class:`matplotlib.figure.Figure`
-    :param h_axis: x-axis data
-    :type h_axis: :py:class:`numpy.ndarray`
-    :param v_axis: y-axis data
-    :type v_axis:  :py:class:`numpy.ndarray`
-    :param param: Axes limits and labels.
-    :type param: dict
-    :param slice_opts: Options for plotted line.
-    :type slice_opts: dict
-    :returns: Generates plot on ``fig``.
-    :rtype: None
+    Parameters
+    ----------
+    h_axis : :py:class:`numpy.ndarray`
+        x-axis data.
+    v_axis : :py:class:`numpy.ndarray`
+        y-axis data.
+    param : dict
+        Axes limits and labels.
+    slice_opts : dict
+        Options for plotted line.
+    ax : :py:class:`matplotlib.axes.Axes`
+        Axes instance, for plotting.
+        If ``None``, a new :py:class:`Figure <matplotlib.figure.Figure>` will be created.
+        Defaults to ``None``.
+
+    Returns
+    -------
+    fig : :py:class:`matplotlib.figure.Figure`
+        Figure instance.
+
+    Examples
+    --------
+    >>> import numpy as np
+    >>> uu = np.linspace(0, np.pi, 128)
+    >>> data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
+    >>> plot1d_break_x(
+    ...     uu,
+    ...     data[data.shape[0] // 2, :],
+    ...     {
+    ...         "xlim_left": (0, 1),
+    ...         "xlim_right": (2, 3),
+    ...         "xlabel": r"$x$ ($\mu$m)",
+    ...         "ylabel": r"$\rho$ (cm${}^{-3}$)",
+    ...     },
+    ...     {"ls": "--", "color": "#d62728"})  #doctest: +ELLIPSIS
+    <Figure size ... with 2 Axes>
+
     """
-    ax_left = fig.axes[0]
+    if ax is None:
+        ax = _make_ax()
+
+    fig = ax.figure
+    ax_left = ax
     divider = make_axes_locatable(ax_left)
     ax_right = divider.new_horizontal(size="100%", pad=1)
     fig.add_axes(ax_right)
@@ -59,28 +86,54 @@ def plot1d_break_x(fig, h_axis, v_axis, param, slice_opts):
     ax_right.plot((-d, +d), (1 - d, 1 + d), **kwargs)
     ax_right.plot((-d, +d), (-d, +d), **kwargs)
 
+    return fig
+
 
 class Plot1D:
-    """Plot the data with given labels and plot options.
+    r"""Plot the data with given labels and plot options.
 
-    :param v_axis: y-axis data
-    :type v_axis: :py:class:`np.ndarray`
-    :param h_axis: x-axis data
-    :type h_axis: :py:class:`np.ndarray`
-    :param xlabel: x-axis label
-    :type xlabel: str
-    :param ylabel: y-axis label
-    :type ylabel: str
-    :param kwargs: other arguments for :py:meth:`matplotlib.axes.Axes.plot`
+    Parameters
+    ----------
+    v_axis : :py:class:`np.ndarray`
+        y-axis data.
+    h_axis : :py:class:`np.ndarray`
+        x-axis data.
+    xlabel : str
+        x-axis label.
+    ylabel : str
+        y-axis label.
+    ax : :py:class:`matplotlib.axes.Axes`
+        Axes instance, for plotting.
+        If ``None``, a new :py:class:`Figure <matplotlib.figure.Figure>` will be created.
+        Defaults to ``None``.
+    kwargs : dict
+        Other arguments for :py:meth:`plot <matplotlib.axes.Axes.plot>`.
+
+    Examples
+    --------
+    >>> import numpy as np
+    >>> uu = np.linspace(0, np.pi, 128)
+    >>> data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
+    >>> p1d = Plot1D(
+    ...     uu,
+    ...     data[data.shape[0] // 2, :],
+    ...     xlabel=r"$z$ ($\mu$m)",
+    ...     ylabel=r"$a_0$",
+    ...     xlim=[0, 3],
+    ...     ylim=[-1, 1],
+    ...     color="#d62728",
+    ... )
+    >>> p1d.fig    #doctest: +ELLIPSIS
+    <Figure size ... with 1 Axes>
     """
 
-    def __init__(self, h_axis, v_axis, xlabel=r"", ylabel=r"", **kwargs):
+    def __init__(self, h_axis, v_axis, xlabel=r"", ylabel=r"", ax=None, **kwargs):
         self.xlim = kwargs.pop("xlim", [np.min(h_axis), np.max(h_axis)])
         self.ylim = kwargs.pop("ylim", [np.min(v_axis), np.max(v_axis)])
         #
         xmin_idx, xmax_idx = (
-            idx_from_val(h_axis, self.xlim[0]),
-            idx_from_val(h_axis, self.xlim[1]),
+            _idx_from_val(h_axis, self.xlim[0]),
+            _idx_from_val(h_axis, self.xlim[1]),
         )
         #
         self.h_axis = h_axis[xmin_idx:xmax_idx]
@@ -89,9 +142,9 @@ class Plot1D:
         self.label = {"x": xlabel, "y": ylabel}
         self.text = kwargs.pop("text", "")
         #
-        self.fig = Figure(figsize=kwargs.pop("figsize", (6.4, 6.4)))
-        self.canvas = FigureCanvas(self.fig)
-        self.ax = self.fig.add_subplot(111)
+        if ax is None:
+            ax = _make_ax()
+        self.ax = ax
 
         self.ax.plot(self.h_axis, self.data, **kwargs)
 
@@ -107,6 +160,8 @@ class Plot1D:
         self.ax.text(
             0.02, 0.95, self.text, transform=self.ax.transAxes, color="firebrick"
         )
+
+        self.fig = self.ax.figure
 
     def __str__(self):
         return "extent=({:.3f}, {:.3f}); min, max = ({:.3f}, {:.3f})".format(
