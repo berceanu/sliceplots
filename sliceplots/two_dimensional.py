@@ -39,31 +39,39 @@ class Plot2D:
 
     Examples
     --------
-    >>> import numpy as np
-    >>> uu = np.linspace(0, np.pi, 128)
-    >>> data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
-    >>> p2d = Plot2D(
-    ...     fig=None,
-    ...     arr2d=data,
-    ...     h_axis=uu,
-    ...     v_axis=uu,
-    ...     xlabel=r"$x$ ($\mu$m)",
-    ...     ylabel=r"$y$ ($\mu$m)",
-    ...     zlabel=r"$\rho$ (cm${}^{-3}$)",
-    ...     hslice_val=0.75,
-    ...     vslice_val=2.75,
-    ...     hslice_opts={"color": "#1f77b4", "lw": 1.5, "ls": "-"},
-    ...     vslice_opts={"color": "#d62728", "ls": "-"},
-    ...     cmap="viridis",
-    ...     cbar=True,
-    ...     extent=(0, np.pi, 0, np.pi),
-    ...     vmin=-1.0,
-    ...     vmax=1.0,
-    ...     text="your text here",
-    ... )
-    >>> p2d.fig  #doctest: +ELLIPSIS
-    <Figure size ... with 4 Axes>
+    .. plot::
+       :include-source:
 
+        import numpy as np
+        from matplotlib import pyplot
+
+        from sliceplots import Plot2D
+
+        uu = np.linspace(0, np.pi, 128)
+        data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
+
+        fig = pyplot.figure(figsize=(8,8))
+
+        p2d = Plot2D(
+            fig=fig,
+            arr2d=data,
+            h_axis=uu,
+            v_axis=uu,
+            xlabel=r"$x$ ($\mu$m)",
+            ylabel=r"$y$ ($\mu$m)",
+            zlabel=r"$\rho$ (cm${}^{-3}$)",
+            hslice_val=0.75,
+            vslice_val=2.75,
+            hslice_opts={"color": "#1f77b4", "lw": 1.5, "ls": "-"},
+            vslice_opts={"color": "#d62728", "ls": "-"},
+            cmap="viridis",
+            cbar=True,
+            extent=(0, np.pi, 0, np.pi),
+            vmin=-1.0,
+            vmax=1.0,
+            text="your text here",
+        )
+        p2d.fig
     """
 
     def __init__(

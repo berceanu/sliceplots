@@ -46,38 +46,3 @@ Features
 * small codebase
 * designed for non-interactive use, scripting and publication-quality plots
 
-Quick start
------------
-
-Install the package via:
-
-.. code-block:: console
-
-        $ pip install sliceplots
-
-Generate a quick slice plot:
-
-.. plot::
-   :include-source:
-
-        import numpy as np
-        from matplotlib import pyplot
-        from sliceplots import Plot2D
-
-        axis_data = np.linspace(0, np.pi, 128)
-        data_2d = np.cos(axis_data - 0.5) * np.cos(axis_data.reshape(-1, 1) - 1.0)
-        
-        fig = pyplot.figure(figsize=(8,8))
-        slices = Plot2D(
-                    fig=fig,
-                    arr2d=data_2d,
-                    h_axis=axis_data,
-                    v_axis=axis_data,
-                    xlabel="x",
-                    ylabel="y",
-                    zlabel="f(x,y)",
-                    hslice_val=0.75,
-                    vslice_val=2.75,
-        )
-        slices.fig
-
