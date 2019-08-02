@@ -16,3 +16,10 @@ History
 ------------------
 
 * Fixed label positions and colors.
+
+0.2.0 (2019-08-02)
+------------------
+
+* Simplify documentation and tests.
+* Allow passing an existing ``Axes`` instance to all methods/classes.
+
