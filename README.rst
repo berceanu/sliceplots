@@ -67,7 +67,7 @@ Generate a quick slice plot:
         axis_data = np.linspace(0, np.pi, 128)
         data_2d = np.cos(axis_data - 0.5) * np.cos(axis_data.reshape(-1, 1) - 1.0)
         
-        fig = plt.figure(figsize=(8,8))
+        fig = pyplot.figure(figsize=(8,8))
         slices = Plot2D(
                     fig=fig,
                     arr2d=data_2d,

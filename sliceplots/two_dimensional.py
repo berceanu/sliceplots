@@ -18,6 +18,10 @@ class Plot2D:
 
     Parameters
     ----------
+    fig : :py:class:`matplotlib.figure.Figure`
+        Empty figure to draw on.
+        If ``None``, a new :py:class:`Figure <matplotlib.figure.Figure>` will be created.
+        Defaults to ``None``.
     arr2d: :py:class:`np.ndarray`
         Data to be plotted.
     h_axis: :py:class:`np.ndarray`
@@ -39,7 +43,7 @@ class Plot2D:
     >>> uu = np.linspace(0, np.pi, 128)
     >>> data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
     >>> p2d = Plot2D(
-    ...     ax=None,
+    ...     fig=None,
     ...     arr2d=data,
     ...     h_axis=uu,
     ...     v_axis=uu,
@@ -58,7 +62,7 @@ class Plot2D:
     ...     text="your text here",
     ... )
     >>> p2d.fig  #doctest: +ELLIPSIS
-    <Figure size ... with 5 Axes>
+    <Figure size ... with 4 Axes>
 
     """
 
@@ -108,14 +112,12 @@ class Plot2D:
         #
         self.text = kwargs.get("text", "")
         #
-        if fig is None:
-            fig = Figure()
-
-        self.fig = fig
-        self.canvas = FigureCanvas(self.fig)
-        # A canvas must be manually attached to the figure (pyplot would automatically
-        # do it).  This is done by instantiating the canvas with the figure as
-        # argument.
+        if fig is None:  # make new figure
+            self.fig = Figure()
+            self.canvas = FigureCanvas(self.fig)
+        else:
+            self.fig = fig
+            self.canvas = self.fig.canvas
 
         self.im = None  # image to be created by .imshow()
 
@@ -123,9 +125,7 @@ class Plot2D:
         self.axh = None  # horizontal slice axes
         self.axv = None  # vertical slice axes
 
-        self.canvas = self.fig.canvas
-        #
-        self.draw_fig(**kwargs)
+        self._draw_fig(**kwargs)
 
     def __str__(self):
         return "extent=({:.3f}, {:.3f}, {:.3f}, {:.3f}); min, max = ({:.3f}, {:.3f})".format(
@@ -137,7 +137,7 @@ class Plot2D:
             np.amax(self.data),
         )
 
-    def main_panel(self, **kwargs):
+    def _main_panel(self, **kwargs):
         self.im = self.ax0.imshow(
             self.data,
             origin="lower",
@@ -153,7 +153,7 @@ class Plot2D:
         self.ax0.set_xlabel(self.label["x"])
         self.ax0.set_ylabel(self.label["y"])
 
-    def draw_fig(self, **kwargs):
+    def _draw_fig(self, **kwargs):
         slice_opts = {"ls": "-", "color": "#ff7f0e", "lw": 1.5}  # defaults
         hslice_opts = slice_opts.copy()
         vslice_opts = slice_opts.copy()
@@ -165,7 +165,7 @@ class Plot2D:
         if (self.hslice_idx is None) and (self.vslice_idx is None):
             gs = GridSpec(1, 1, height_ratios=[1], width_ratios=[1])
             self.ax0 = self.fig.add_subplot(gs[0])
-            self.main_panel(**kwargs)
+            self._main_panel(**kwargs)
 
         # ---- #
         elif (self.hslice_idx is not None) and (self.vslice_idx is None):
@@ -173,7 +173,7 @@ class Plot2D:
             self.ax0 = self.fig.add_subplot(gs[1, 0])
             self.axh = self.fig.add_subplot(gs[0, 0], sharex=self.ax0)
             #
-            self.main_panel(**kwargs)
+            self._main_panel(**kwargs)
             #
             self.ax0.axhline(y=self.v_axis[self.hslice_idx], **hslice_opts)
             #
@@ -208,7 +208,7 @@ class Plot2D:
             self.ax0 = self.fig.add_subplot(gs[0, 0])
             self.axv = self.fig.add_subplot(gs[0, 1], sharey=self.ax0)
             #
-            self.main_panel(**kwargs)
+            self._main_panel(**kwargs)
             #
             self.ax0.axvline(x=self.h_axis[self.vslice_idx], **vslice_opts)
             #
@@ -244,7 +244,7 @@ class Plot2D:
             self.axh = self.fig.add_subplot(gs[0, 0], sharex=self.ax0)
             self.axv = self.fig.add_subplot(gs[1, 1], sharey=self.ax0)
             #
-            self.main_panel(**kwargs)
+            self._main_panel(**kwargs)
             #
             self.ax0.axhline(y=self.v_axis[self.hslice_idx], **hslice_opts)  # ##----##
             self.ax0.axvline(x=self.h_axis[self.vslice_idx], **vslice_opts)  # ## | ##
