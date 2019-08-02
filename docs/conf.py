@@ -35,20 +35,12 @@ import sliceplots  # NOQA: E402
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
     "sphinx.ext.autodoc",
-    "sphinx.ext.napoleon",
-    "sphinx.ext.intersphinx",
-    "sphinx.ext.autosummary",
-    "sphinx.ext.mathjax",
     "sphinx.ext.viewcode",
-    "sphinx.ext.autosectionlabel",
-    "jupyter_sphinx.execute",
-    "nbsphinx",
+    "sphinx.ext.doctest",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.mathjax",
+    "matplotlib.sphinxext.plot_directive",
 ]
-intersphinx_mapping = {
-    "matplotlib": ("https://matplotlib.org", None),
-    "unyt": ("https://unyt.readthedocs.io/en/latest", None),
-    "python": ("https://docs.python.org/3", None),
-}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -86,7 +78,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "modules/modules.rst"]
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = "sphinx"
@@ -100,7 +92,7 @@ todo_include_todos = False
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "sphinx_rtd_theme"
+html_theme = "alabaster"
 
 # Theme options are theme-specific and customize the look and feel of a
 # theme further.  For a list of options available for each theme, see the
@@ -174,3 +166,25 @@ texinfo_documents = [
         "Miscellaneous",
     )
 ]
+
+# -- apidoc section ----------------------------------------
+
+autodoc_member_order = "bysource"
+
+
+def run_apidoc(_):
+    try:
+        from sphinx.ext.apidoc import main
+    except ImportError:
+        from sphinx.apidoc import main
+    sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+    cur_dir = os.path.abspath(os.path.dirname(__file__))
+    api_doc_dir = os.path.join(cur_dir, "modules")
+    module = os.path.join(cur_dir, "..", "sliceplots")
+    ignore = os.path.join(cur_dir, "..", "tests")
+    os.environ["SPHINX_APIDOC_OPTIONS"] = "members,undoc-members,show-inheritance"
+    main(["-M", "-f", "-e", "-T", "-d 0", "-o", api_doc_dir, module, ignore])
+
+
+def setup(app):
+    app.connect("builder-inited", run_apidoc)

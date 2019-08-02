@@ -30,10 +30,6 @@ Slice Plots
    :alt: PyPI - License
 
 
-.. image:: https://mybinder.org/badge_logo.svg
-   :target: https://mybinder.org/v2/gh/berceanu/sliceplots/bda060663a197d31caa2deacfac68adb7c687690?filepath=examples%2Fsliceplots.ipynb
-
-
 thin wrapper on top of ``matplotlib``'s ``.imshow()`` for 2D plotting, with attached slice plots
 
 
@@ -50,38 +46,3 @@ Features
 * small codebase
 * designed for non-interactive use, scripting and publication-quality plots
 
-Quick start
------------
-
-Install the package via:
-
-.. code-block:: console
-
-        $ pip install sliceplots
-
-Generate a quick slice plot:
-
-.. code-block:: python
-
-    import sliceplots.two_dimensional as two_d
-
-    axis_data = np.linspace(0, np.pi, 128)
-    data_2d = np.cos(axis_data - 0.5) * np.cos(axis_data.reshape(-1, 1) - 1.0)
-
-    two_d.Plot2D(
-        data_2d,
-        axis_data,  # horiz. axis
-        axis_data,  # vert. axis
-        xlabel="x",
-        ylabel="y",
-        zlabel="f(x,y)",
-        hslice_val=0.75,
-        vslice_val=2.75,
-    )
-
-.. image:: https://raw.githubusercontent.com/berceanu/sliceplots/master/tests/baseline/imshow_slices.png
-
-Run the ``sliceplots`` example notebook `live on
-Binder <https://mybinder.org/v2/gh/berceanu/sliceplots/bda060663a197d31caa2deacfac68adb7c687690?filepath=examples%2Fsliceplots.ipynb>`_
-to see examples of how to use ``sliceplots`` or visit the
-`tutorial on Read the Docs <https://sliceplots.readthedocs.io/en/latest/usage.html>`__.

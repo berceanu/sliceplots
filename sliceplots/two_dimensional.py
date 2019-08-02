@@ -5,43 +5,93 @@
 import matplotlib.transforms as transforms
 import numpy as np
 from matplotlib.artist import setp, getp
+from matplotlib.gridspec import GridSpec
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
-from matplotlib.gridspec import GridSpec
-from mpl_toolkits.axes_grid1 import make_axes_locatable
-from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
-from ._util import idx_from_val
+from sliceplots.util import _idx_from_val
 
 
 class Plot2D:
-    """Pseudo-color plot of a 2D array with optional 1D slices attached.
+    r"""Pseudo-color plot of a 2D array with optional 1D slices attached.
 
-    :param arr2d: data to be plotted
-    :type arr2d: :py:class:`np.ndarray`
-    :param h_axis: values on the "x" axis
-    :type h_axis: :py:class:`np.ndarray`
-    :param v_axis: values on the "y" axis
-    :type v_axis: :py:class:`np.ndarray`
-    :param xlabel: x-axis label
-    :type xlabel: str
-    :param ylabel: y-axis label
-    :type ylabel: str
-    :param zlabel: label for :py:class:`matplotlib.colorbar.Colorbar`
-    :type zlabel: str
-    :param kwargs: other plot options
+    Parameters
+    ----------
+    fig : :py:class:`matplotlib.figure.Figure`
+        Empty figure to draw on.
+        If ``None``, a new :py:class:`Figure <matplotlib.figure.Figure>` will be created.
+        Defaults to ``None``.
+    arr2d: :py:class:`np.ndarray`
+        Data to be plotted.
+    h_axis: :py:class:`np.ndarray`
+        Values on the "x" axis.
+    v_axis: :py:class:`np.ndarray`
+        Values on the "y" axis.
+    xlabel: str
+        x-axis label.
+    ylabel: str
+        y-axis label.
+    zlabel: str
+        Label for :py:class:`matplotlib.colorbar.Colorbar`.
+    kwargs : dict
+        Other plot options.
+
+    Examples
+    --------
+    .. plot::
+       :include-source:
+
+        import numpy as np
+        from matplotlib import pyplot
+
+        from sliceplots import Plot2D
+
+        uu = np.linspace(0, np.pi, 128)
+        data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
+
+        fig = pyplot.figure(figsize=(8,8))
+
+        p2d = Plot2D(
+            fig=fig,
+            arr2d=data,
+            h_axis=uu,
+            v_axis=uu,
+            xlabel=r"$x$ ($\mu$m)",
+            ylabel=r"$y$ ($\mu$m)",
+            zlabel=r"$\rho$ (cm${}^{-3}$)",
+            hslice_val=0.75,
+            vslice_val=2.75,
+            hslice_opts={"color": "#1f77b4", "lw": 1.5, "ls": "-"},
+            vslice_opts={"color": "#d62728", "ls": "-"},
+            cmap="viridis",
+            cbar=True,
+            extent=(0, np.pi, 0, np.pi),
+            vmin=-1.0,
+            vmax=1.0,
+            text="your text here",
+        )
+        p2d.fig
     """
 
     def __init__(
-        self, arr2d, h_axis, v_axis, xlabel=r"", ylabel=r"", zlabel=r"", **kwargs
+        self,
+        arr2d,
+        h_axis,
+        v_axis,
+        xlabel=r"",
+        ylabel=r"",
+        zlabel=r"",
+        fig=None,
+        **kwargs,
     ):
         self.extent = kwargs.get(
             "extent", (np.min(h_axis), np.max(h_axis), np.min(v_axis), np.max(v_axis))
         )
         #
         xmin, xmax, ymin, ymax = self.extent
-        xmin_idx, xmax_idx = idx_from_val(h_axis, xmin), idx_from_val(h_axis, xmax)
-        ymin_idx, ymax_idx = idx_from_val(v_axis, ymin), idx_from_val(v_axis, ymax)
+        xmin_idx, xmax_idx = _idx_from_val(h_axis, xmin), _idx_from_val(h_axis, xmax)
+        ymin_idx, ymax_idx = _idx_from_val(v_axis, ymin), _idx_from_val(v_axis, ymax)
         #
         self.data = arr2d[ymin_idx:ymax_idx, xmin_idx:xmax_idx]
         self.min_data, self.max_data = np.amin(self.data), np.amax(self.data)
@@ -64,16 +114,18 @@ class Plot2D:
         self.hslice_idx = None
         self.vslice_idx = None
         if self.hslice_val is not None:
-            self.hslice_idx = idx_from_val(self.v_axis, self.hslice_val)
+            self.hslice_idx = _idx_from_val(self.v_axis, self.hslice_val)
         if self.vslice_val is not None:
-            self.vslice_idx = idx_from_val(self.h_axis, self.vslice_val)
+            self.vslice_idx = _idx_from_val(self.h_axis, self.vslice_val)
         #
         self.text = kwargs.get("text", "")
         #
-        self.fig = Figure(figsize=kwargs.pop("figsize", (8, 8)))
-        # A canvas must be manually attached to the figure (pyplot would automatically
-        # do it).  This is done by instantiating the canvas with the figure as
-        # argument.
+        if fig is None:  # make new figure
+            self.fig = Figure()
+            self.canvas = FigureCanvas(self.fig)
+        else:
+            self.fig = fig
+            self.canvas = self.fig.canvas
 
         self.im = None  # image to be created by .imshow()
 
@@ -81,9 +133,7 @@ class Plot2D:
         self.axh = None  # horizontal slice axes
         self.axv = None  # vertical slice axes
 
-        self.canvas = FigureCanvas(self.fig)
-        #
-        self.draw_fig(**kwargs)
+        self._draw_fig(**kwargs)
 
     def __str__(self):
         return "extent=({:.3f}, {:.3f}, {:.3f}, {:.3f}); min, max = ({:.3f}, {:.3f})".format(
@@ -95,21 +145,7 @@ class Plot2D:
             np.amax(self.data),
         )
 
-    @staticmethod
-    def colorbar(mappable):
-        """Constructs a scaled colorbar for a given plot.
-
-        Parameters
-        ----------
-        mappable : The Image, ContourSet, etc. to which the colorbar applies.
-        """
-        ax = mappable.axes
-        fig = ax.figure
-        divider = make_axes_locatable(ax)
-        cax = divider.append_axes("right", size="5%", pad=0.05)
-        return fig.colorbar(mappable, cax=cax)
-
-    def main_panel(self, **kwargs):
+    def _main_panel(self, **kwargs):
         self.im = self.ax0.imshow(
             self.data,
             origin="lower",
@@ -125,7 +161,7 @@ class Plot2D:
         self.ax0.set_xlabel(self.label["x"])
         self.ax0.set_ylabel(self.label["y"])
 
-    def draw_fig(self, **kwargs):
+    def _draw_fig(self, **kwargs):
         slice_opts = {"ls": "-", "color": "#ff7f0e", "lw": 1.5}  # defaults
         hslice_opts = slice_opts.copy()
         vslice_opts = slice_opts.copy()
@@ -137,7 +173,7 @@ class Plot2D:
         if (self.hslice_idx is None) and (self.vslice_idx is None):
             gs = GridSpec(1, 1, height_ratios=[1], width_ratios=[1])
             self.ax0 = self.fig.add_subplot(gs[0])
-            self.main_panel(**kwargs)
+            self._main_panel(**kwargs)
 
         # ---- #
         elif (self.hslice_idx is not None) and (self.vslice_idx is None):
@@ -145,7 +181,7 @@ class Plot2D:
             self.ax0 = self.fig.add_subplot(gs[1, 0])
             self.axh = self.fig.add_subplot(gs[0, 0], sharex=self.ax0)
             #
-            self.main_panel(**kwargs)
+            self._main_panel(**kwargs)
             #
             self.ax0.axhline(y=self.v_axis[self.hslice_idx], **hslice_opts)
             #
@@ -180,7 +216,7 @@ class Plot2D:
             self.ax0 = self.fig.add_subplot(gs[0, 0])
             self.axv = self.fig.add_subplot(gs[0, 1], sharey=self.ax0)
             #
-            self.main_panel(**kwargs)
+            self._main_panel(**kwargs)
             #
             self.ax0.axvline(x=self.h_axis[self.vslice_idx], **vslice_opts)
             #
@@ -216,7 +252,7 @@ class Plot2D:
             self.axh = self.fig.add_subplot(gs[0, 0], sharex=self.ax0)
             self.axv = self.fig.add_subplot(gs[1, 1], sharey=self.ax0)
             #
-            self.main_panel(**kwargs)
+            self._main_panel(**kwargs)
             #
             self.ax0.axhline(y=self.v_axis[self.hslice_idx], **hslice_opts)  # ##----##
             self.ax0.axvline(x=self.h_axis[self.vslice_idx], **vslice_opts)  # ## | ##
