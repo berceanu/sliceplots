@@ -23,3 +23,8 @@ History
 * Simplify documentation and tests.
 * Allow passing an existing ``Axes`` instance to all methods/classes.
 
+0.2.1 (2019-08-02)
+------------------
+
+* Fix bumpversion problem 
+
