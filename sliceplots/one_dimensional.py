@@ -112,21 +112,31 @@ class Plot1D:
 
     Examples
     --------
-    >>> import numpy as np
-    >>> uu = np.linspace(0, np.pi, 128)
-    >>> data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
-    >>> p1d = Plot1D(
-    ...     ax=None,
-    ...     h_axis=uu,
-    ...     v_axis=data[data.shape[0] // 2, :],
-    ...     xlabel=r"$z$ ($\mu$m)",
-    ...     ylabel=r"$a_0$",
-    ...     xlim=[0, 3],
-    ...     ylim=[-1, 1],
-    ...     color="#d62728",
-    ... )
-    >>> p1d.fig    #doctest: +ELLIPSIS
-    <Figure size ... with 1 Axes>
+    .. plot::
+       :include-source:
+
+        import numpy as np
+        from matplotlib import pyplot
+
+        from sliceplots import Plot1D
+
+        uu = np.linspace(0, np.pi, 128)
+        data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
+
+        fig = pyplot.figure()
+        ax = fig.add_subplot(111)
+
+        p1d = Plot1D(
+            ax=ax,
+            h_axis=uu,
+            v_axis=data[data.shape[0] // 2, :],
+            xlabel=r"$z$ ($\mu$m)",
+            ylabel=r"$a_0$",
+            xlim=[0, 3],
+            ylim=[-1, 1],
+            color="#d62728",
+        )
+        p1d.fig
     """
 
     def __init__(self, h_axis, v_axis, xlabel=r"", ylabel=r"", ax=None, **kwargs):
