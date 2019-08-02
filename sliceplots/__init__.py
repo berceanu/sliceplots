@@ -16,4 +16,4 @@ from sliceplots.two_dimensional import Plot2D  # NOQA: F401
 
 __author__ = """Andrei Berceanu"""
 __email__ = "andreicberceanu@gmail.com"
-__version__ = "0.2.0"
+__version__ = "0.2.1"
