@@ -7,7 +7,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 from matplotlib.collections import LineCollection
 from matplotlib.colors import Normalize
 
-from .util import _idx_from_val, _make_ax, addcolorbar
+from sliceplots.util import _idx_from_val, _make_ax, addcolorbar
 
 
 label = (None,)
@@ -130,7 +130,7 @@ def plot1d_break_x(*, ax=None, h_axis, v_axis, param, slice_opts):
     ...         "ylabel": r"$\rho$ (cm${}^{-3}$)",
     ...     },
     ...     slice_opts={"ls": "--", "color": "#d62728"})  #doctest: +ELLIPSIS
-    <Figure size ... with 2 Axes>
+    <matplotlib.axes._subplots.AxesSubplot object at 0x...>
 
     """
     if ax is None:
@@ -168,6 +168,8 @@ def plot1d_break_x(*, ax=None, h_axis, v_axis, param, slice_opts):
     kwargs.update(transform=ax_right.transAxes)  # switch to the right axes
     ax_right.plot((-d, +d), (1 - d, 1 + d), **kwargs)
     ax_right.plot((-d, +d), (-d, +d), **kwargs)
+
+    return ax
 
 
 class Plot1D:

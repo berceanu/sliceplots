@@ -12,9 +12,9 @@ from sliceplots import Plot2D
 def test_plot2d_2slices(plt_data):
     """Checks ``Plot2D`` class."""
     p2d = Plot2D(
-        plt_data.data,
-        plt_data.uu,
-        plt_data.uu,
+        arr2d=plt_data.data,
+        h_axis=plt_data.uu,
+        v_axis=plt_data.uu,
         xlabel=r"$x$ ($\mu$m)",
         ylabel=r"$y$ ($\mu$m)",
         zlabel=r"$\rho$ (cm$^{-3}$)",
@@ -38,9 +38,9 @@ def test_plot2d_2slices(plt_data):
 def test_plot2d_horiz_slice(plt_data):
     """Checks ``Plot2D`` class."""
     p2d = Plot2D(
-        plt_data.data,
-        plt_data.uu,
-        plt_data.uu,
+        arr2d=plt_data.data,
+        h_axis=plt_data.uu,
+        v_axis=plt_data.uu,
         xlabel=r"$x$ ($\mu$m)",
         ylabel=r"$y$ ($\mu$m)",
         zlabel=r"$\rho$ (cm$^{-3}$)",
@@ -62,9 +62,9 @@ def test_plot2d_horiz_slice(plt_data):
 def test_plot2d_vert_slice(plt_data):
     """Checks ``Plot2D`` class."""
     p2d = Plot2D(
-        plt_data.data,
-        plt_data.uu,
-        plt_data.uu,
+        arr2d=plt_data.data,
+        h_axis=plt_data.uu,
+        v_axis=plt_data.uu,
         xlabel=r"$x$ ($\mu$m)",
         ylabel=r"$y$ ($\mu$m)",
         zlabel=r"$\rho$ (cm$^{-3}$)",
@@ -86,9 +86,9 @@ def test_plot2d_vert_slice(plt_data):
 def test_plot2d_no_slices(plt_data):
     """Checks ``Plot2D`` class."""
     p2d = Plot2D(
-        plt_data.data,
-        plt_data.uu,
-        plt_data.uu,
+        arr2d=plt_data.data,
+        h_axis=plt_data.uu,
+        v_axis=plt_data.uu,
         xlabel=r"$x$ ($\mu$m)",
         ylabel=r"$y$ ($\mu$m)",
         zlabel=r"$\rho$ (cm$^{-3}$)",

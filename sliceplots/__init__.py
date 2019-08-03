@@ -11,13 +11,13 @@ top-level ``sliceplots`` namespace:
 * :func:`sliceplots.one_dimensional.plot1d_break_x`
 * :func:`sliceplots.util.addcolorbar`
 """
-from .util import addcolorbar  # NOQA: F401
-from .one_dimensional import (
+from sliceplots.util import addcolorbar  # NOQA: F401
+from sliceplots.one_dimensional import (
     plot_multicolored_line,
     plot1d_break_x,
     Plot1D,
 )  # NOQA: F401
-from .two_dimensional import Plot2D  # NOQA: F401
+from sliceplots.two_dimensional import Plot2D  # NOQA: F401
 
 
 __author__ = """Andrei Berceanu"""
