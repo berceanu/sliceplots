@@ -10,10 +10,35 @@ from matplotlib.colors import Normalize
 from .util import _idx_from_val, _make_ax, addcolorbar
 
 
-def plot_multicolored_line(*, ax=None, x, y, other_y):
-    r"""
+label = (None,)
 
 
+def plot_multicolored_line(*, ax=None, x, y, other_y, cmap="viridis", cbar_opts={}):
+    r"""Plots a line colored based on the values of another array.
+
+    Plots the curve ``y(x)``, colored based on the values in ``other_y``.
+
+    Parameters
+    ----------
+    ax : :py:class:`matplotlib.axes.Axes`
+        Axes instance, for plotting.
+        If ``None``, a new :py:class:`Figure <matplotlib.figure.Figure>` will be created.
+        Defaults to ``None``.
+    y : 1d array_like
+        The dependent variable.
+    x : 1d array_like
+        The independent variable.
+    other_y: 1d array_like
+        The values whose magnitude will be converted to colors.
+    cmap : str
+        The used colormap (defaults to "viridis").
+    cbar_opts : dict
+        Options for :py:func:`sliceplots.addcolorbar`.
+
+    Raises
+    ------
+    AssertionError
+        If the length of `y` and `other_y` do not match.
 
     References
     ----------
@@ -21,6 +46,8 @@ def plot_multicolored_line(*, ax=None, x, y, other_y):
 
     Examples
     --------
+    We plot a curve and color it based on the value of its first derivative.
+
     .. plot::
        :include-source:
 
@@ -31,11 +58,14 @@ def plot_multicolored_line(*, ax=None, x, y, other_y):
 
         x = np.linspace(0, 3 * np.pi, 500)
         y = np.sin(x)
-        dydx = np.cos(0.5 * (x[:-1] + x[1:]))  # first derivative
+        dydx = np.gradient(y) * 100  # first derivative
 
         fig, ax = pyplot.subplots()
 
-        plot_multicolored_line(ax=ax)
+        plot_multicolored_line(ax=ax, x=x, y=y, other_y=dydx,
+         cbar_opts={"label" : "dydx"})
+
+        ax.set(ylabel="y", xlabel="x")
     """
     if not (len(y) == len(other_y)):
         raise AssertionError("The two 'y' arrays must have the same size!")
@@ -52,23 +82,27 @@ def plot_multicolored_line(*, ax=None, x, y, other_y):
 
     # Create a continuous norm to map from data points to colors
     norm = Normalize(other_y.min(), other_y.max())
-    lc = LineCollection(segments, cmap="viridis", norm=norm)
+    lc = LineCollection(segments, cmap=cmap, norm=norm)
     # Set the values used for colormapping
     lc.set_array(other_y)
     lc.set_linewidth(2)
     line = ax.add_collection(lc)
 
-    addcolorbar(ax=ax, artist=line)
-
     ax.set_xlim(x.min(), x.max())
     ax.set_ylim(y.min(), y.max())
 
+    addcolorbar(ax=ax, artist=line, **cbar_opts)
 
-def plot1d_break_x(h_axis, v_axis, param, slice_opts, ax=None):
+
+def plot1d_break_x(*, ax=None, h_axis, v_axis, param, slice_opts):
     r"""Line plot with a broken x-axis.
 
     Parameters
     ----------
+    ax : :py:class:`matplotlib.axes.Axes`
+        Axes instance, for plotting.
+        If ``None``, a new :py:class:`Figure <matplotlib.figure.Figure>` will be created.
+        Defaults to ``None``.
     h_axis : :py:class:`numpy.ndarray`
         x-axis data.
     v_axis : :py:class:`numpy.ndarray`
@@ -77,21 +111,14 @@ def plot1d_break_x(h_axis, v_axis, param, slice_opts, ax=None):
         Axes limits and labels.
     slice_opts : dict
         Options for plotted line.
-    ax : :py:class:`matplotlib.axes.Axes`
-        Axes instance, for plotting.
-        If ``None``, a new :py:class:`Figure <matplotlib.figure.Figure>` will be created.
-        Defaults to ``None``.
-
-    Returns
-    -------
-    fig : :py:class:`matplotlib.figure.Figure`
-        Figure instance.
 
     Examples
     --------
     >>> import numpy as np
+
     >>> uu = np.linspace(0, np.pi, 128)
     >>> data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
+
     >>> plot1d_break_x(
     ...     ax=None,
     ...     h_axis=uu,
@@ -109,11 +136,10 @@ def plot1d_break_x(h_axis, v_axis, param, slice_opts, ax=None):
     if ax is None:
         ax = _make_ax()
 
-    fig = ax.figure
     ax_left = ax
     divider = make_axes_locatable(ax_left)
     ax_right = divider.new_horizontal(size="100%", pad=1)
-    fig.add_axes(ax_right)
+    ax.figure.add_axes(ax_right)
 
     ax_left.plot(h_axis, v_axis, **slice_opts)
     ax_left.set_ylabel(param["ylabel"])
@@ -142,8 +168,6 @@ def plot1d_break_x(h_axis, v_axis, param, slice_opts, ax=None):
     kwargs.update(transform=ax_right.transAxes)  # switch to the right axes
     ax_right.plot((-d, +d), (1 - d, 1 + d), **kwargs)
     ax_right.plot((-d, +d), (-d, +d), **kwargs)
-
-    return fig
 
 
 class Plot1D:
@@ -181,7 +205,7 @@ class Plot1D:
 
         fig, ax = pyplot.subplots()
 
-        p1d = Plot1D(
+        Plot1D(
             ax=ax,
             h_axis=uu,
             v_axis=data[data.shape[0] // 2, :],
@@ -191,10 +215,9 @@ class Plot1D:
             ylim=[-1, 1],
             color="#d62728",
         )
-        p1d.fig
     """
 
-    def __init__(self, h_axis, v_axis, xlabel=r"", ylabel=r"", ax=None, **kwargs):
+    def __init__(self, *, ax=None, h_axis, v_axis, xlabel=r"", ylabel=r"", **kwargs):
         self.xlim = kwargs.pop("xlim", [np.min(h_axis), np.max(h_axis)])
         self.ylim = kwargs.pop("ylim", [np.min(v_axis), np.max(v_axis)])
         #
@@ -222,18 +245,6 @@ class Plot1D:
             xlabel=self.label["x"],
         )
 
-        self.ax.grid()
-
         self.ax.text(
             0.02, 0.95, self.text, transform=self.ax.transAxes, color="firebrick"
-        )
-
-        self.fig = self.ax.figure
-
-    def __str__(self):
-        return "extent=({:.3f}, {:.3f}); min, max = ({:.3f}, {:.3f})".format(
-            np.min(self.h_axis),
-            np.max(self.h_axis),
-            np.amin(self.data),
-            np.amax(self.data),
         )

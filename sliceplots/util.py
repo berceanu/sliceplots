@@ -55,8 +55,7 @@ def addcolorbar(
         fig, ax = pyplot.subplots()
         img = ax.imshow(data)
 
-        addcolorbar(ax, img)
-        fig
+        addcolorbar(ax=ax, artist=img, label="x")
     """
     divider = make_axes_locatable(ax)
     cax = divider.append_axes(pos, size=size, pad=pad)

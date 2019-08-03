@@ -10,7 +10,7 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 
-from sliceplots.util import _idx_from_val
+from .util import _idx_from_val
 
 
 class Plot2D:
@@ -52,7 +52,7 @@ class Plot2D:
 
         fig = pyplot.figure(figsize=(8,8))
 
-        p2d = Plot2D(
+        Plot2D(
             fig=fig,
             arr2d=data,
             h_axis=uu,
@@ -71,18 +71,18 @@ class Plot2D:
             vmax=1.0,
             text="your text here",
         )
-        p2d.fig
     """
 
     def __init__(
         self,
+        *,
+        fig=None,
         arr2d,
         h_axis,
         v_axis,
         xlabel=r"",
         ylabel=r"",
         zlabel=r"",
-        fig=None,
         **kwargs,
     ):
         self.extent = kwargs.get(
