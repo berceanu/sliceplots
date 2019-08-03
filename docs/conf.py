@@ -39,6 +39,7 @@ extensions = [
     "sphinx.ext.doctest",
     "sphinx.ext.napoleon",
     "sphinx.ext.mathjax",
+    "sphinx.ext.intersphinx",
     "matplotlib.sphinxext.plot_directive",
 ]
 
