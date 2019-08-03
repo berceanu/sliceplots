@@ -8,6 +8,41 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 from sliceplots.util import _idx_from_val, _make_ax
 
 
+def plot_multicolored_line(*, ax):
+    r"""
+
+
+
+    References
+    ----------
+    Original ``matplotlib`` `example <https://matplotlib.org/gallery/lines_bars_and_markers/multicolored_line.html>`_.
+
+    Examples
+    --------
+    .. plot::
+       :include-source:
+
+        import numpy as np
+        from matplotlib import pyplot
+
+        from sliceplots import plot_multicolored_line
+
+        uu = np.linspace(0, np.pi, 128)
+        data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
+
+        fig, ax = pyplot.subplots()
+
+        fig = plot_multicolored_line(ax=ax)
+        fig
+    """
+    if ax is None:
+        ax = _make_ax()
+
+    fig = ax.figure
+
+    return fig
+
+
 def plot1d_break_x(h_axis, v_axis, param, slice_opts, ax=None):
     r"""Line plot with a broken x-axis.
 
@@ -123,8 +158,7 @@ class Plot1D:
         uu = np.linspace(0, np.pi, 128)
         data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
 
-        fig = pyplot.figure()
-        ax = fig.add_subplot(111)
+        fig, ax = pyplot.subplots()
 
         p1d = Plot1D(
             ax=ax,
