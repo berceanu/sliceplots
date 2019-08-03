@@ -4,11 +4,13 @@
 
 import numpy as np
 from mpl_toolkits.axes_grid1 import make_axes_locatable
+from matplotlib.collections import LineCollection
+from matplotlib.colors import Normalize
 
-from sliceplots.util import _idx_from_val, _make_ax
+from .util import _idx_from_val, _make_ax, addcolorbar
 
 
-def plot_multicolored_line(*, ax):
+def plot_multicolored_line(*, ax=None, x, y, other_y):
     r"""
 
 
@@ -27,20 +29,39 @@ def plot_multicolored_line(*, ax):
 
         from sliceplots import plot_multicolored_line
 
-        uu = np.linspace(0, np.pi, 128)
-        data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
+        x = np.linspace(0, 3 * np.pi, 500)
+        y = np.sin(x)
+        dydx = np.cos(0.5 * (x[:-1] + x[1:]))  # first derivative
 
         fig, ax = pyplot.subplots()
 
-        fig = plot_multicolored_line(ax=ax)
-        fig
+        plot_multicolored_line(ax=ax)
     """
+    if not (len(y) == len(other_y)):
+        raise AssertionError("The two 'y' arrays must have the same size!")
+
     if ax is None:
         ax = _make_ax()
 
-    fig = ax.figure
+    # Create a set of line segments so that we can color them individually
+    # This creates the points as a N x 1 x 2 array so that we can stack points
+    # together easily to get the segments. The segments array for line collection
+    # needs to be (numlines) x (points per line) x 2 (for x and y)
+    points = np.array([x, y]).T.reshape(-1, 1, 2)
+    segments = np.concatenate([points[:-1], points[1:]], axis=1)
 
-    return fig
+    # Create a continuous norm to map from data points to colors
+    norm = Normalize(other_y.min(), other_y.max())
+    lc = LineCollection(segments, cmap="viridis", norm=norm)
+    # Set the values used for colormapping
+    lc.set_array(other_y)
+    lc.set_linewidth(2)
+    line = ax.add_collection(lc)
+
+    addcolorbar(ax=ax, artist=line)
+
+    ax.set_xlim(x.min(), x.max())
+    ax.set_ylim(y.min(), y.max())
 
 
 def plot1d_break_x(h_axis, v_axis, param, slice_opts, ax=None):

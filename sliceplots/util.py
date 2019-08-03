@@ -10,8 +10,9 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 
 def addcolorbar(
+    *,
     ax,
-    im,
+    artist,
     pos="right",
     size="5%",
     pad=0.05,
@@ -26,8 +27,8 @@ def addcolorbar(
     ----------
     ax : :py:class:`matplotlib.axes.Axes`
         The axis object the image is drawn in.
-    im : :py:class:`matplotlib.image.AxesImage`
-        The image (return value of ax.imshow(...)).
+    artist : :py:class:`matplotlib.image.AxesImage` etc.
+        The matplotlib artist which is colored, eg. an image.
 
     Returns
     -------
@@ -51,8 +52,7 @@ def addcolorbar(
         uu = np.linspace(0, np.pi, 128)
         data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
 
-        fig = pyplot.figure()
-        ax = fig.add_subplot(111)
+        fig, ax = pyplot.subplots()
         img = ax.imshow(data)
 
         addcolorbar(ax, img)
@@ -64,7 +64,7 @@ def addcolorbar(
         cax.set_visible(False)
         return cax
 
-    cb = ax.figure.colorbar(im, cax=cax, orientation=orientation)
+    cb = ax.figure.colorbar(artist, cax=cax, orientation=orientation)
     if max_ticks is not None:
         from matplotlib import ticker
 
