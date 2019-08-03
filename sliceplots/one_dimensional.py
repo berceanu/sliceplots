@@ -208,7 +208,7 @@ class Plot1D:
     ...     ylim=[-1, 1],
     ...     color="#d62728",
     ... )  #doctest: +ELLIPSIS
-    <one_dimensional.Plot1D object at 0x...>
+    <sliceplots.one_dimensional.Plot1D object at 0x...>
     """
 
     def __init__(self, *, ax=None, h_axis, v_axis, xlabel=r"", ylabel=r"", **kwargs):
