@@ -6,7 +6,7 @@ The following functions and classes are importable from the
 top-level ``sliceplots`` namespace:
 
 * :class:`sliceplots.two_dimensional.Plot2D`
-* :class:`sliceplots.one_dimensional.Plot1D`
+* :class:`sliceplots.one_dimensional.plot1d`
 * :func:`sliceplots.one_dimensional.plot_multicolored_line`
 * :func:`sliceplots.one_dimensional.plot1d_break_x`
 * :func:`sliceplots.util.addcolorbar`
