@@ -10,30 +10,28 @@ from matplotlib.colors import Normalize
 from sliceplots.util import _idx_from_val, _make_ax, addcolorbar
 
 
-label = (None,)
-
-
-def plot_multicolored_line(*, ax=None, x, y, other_y, cmap="viridis", cbar_opts={}):
+def plot_multicolored_line(*, ax=None, x, y, other_y, cmap="viridis", **cbar_opts):
     r"""Plots a line colored based on the values of another array.
 
     Plots the curve ``y(x)``, colored based on the values in ``other_y``.
 
     Parameters
     ----------
-    ax : :py:class:`matplotlib.axes.Axes`
-        Axes instance, for plotting.
+    ax : :py:class:`matplotlib.axes.Axes`, optional
+        Axes instance, for plotting, defaults to ``None``.
         If ``None``, a new :py:class:`Figure <matplotlib.figure.Figure>` will be created.
-        Defaults to ``None``.
+
     y : 1d array_like
         The dependent variable.
     x : 1d array_like
         The independent variable.
     other_y: 1d array_like
         The values whose magnitude will be converted to colors.
-    cmap : str
+
+    cmap : str, optional
         The used colormap (defaults to "viridis").
-    cbar_opts : dict
-        Options for :py:func:`sliceplots.addcolorbar`.
+    cbar_opts : dict, optional
+        Options for :meth:`~sliceplots.util.addcolorbar`.
 
     Raises
     ------
@@ -42,7 +40,7 @@ def plot_multicolored_line(*, ax=None, x, y, other_y, cmap="viridis", cbar_opts=
 
     References
     ----------
-    Original ``matplotlib`` `example <https://matplotlib.org/gallery/lines_bars_and_markers/multicolored_line.html>`_.
+    ``matplotlib`` `example <https://matplotlib.org/gallery/lines_bars_and_markers/multicolored_line.html>`_.
 
     Examples
     --------
@@ -62,8 +60,7 @@ def plot_multicolored_line(*, ax=None, x, y, other_y, cmap="viridis", cbar_opts=
 
         fig, ax = pyplot.subplots()
 
-        plot_multicolored_line(ax=ax, x=x, y=y, other_y=dydx,
-         cbar_opts={"label" : "dydx"})
+        plot_multicolored_line(ax=ax, x=x, y=y, other_y=dydx, label="dydx")
 
         ax.set(ylabel="y", xlabel="x")
     """
@@ -91,7 +88,7 @@ def plot_multicolored_line(*, ax=None, x, y, other_y, cmap="viridis", cbar_opts=
     ax.set_xlim(x.min(), x.max())
     ax.set_ylim(y.min(), y.max())
 
-    addcolorbar(ax=ax, artist=line, **cbar_opts)
+    addcolorbar(ax=ax, mappable=line, **cbar_opts)
 
 
 def plot1d_break_x(*, ax=None, h_axis, v_axis, param, slice_opts):

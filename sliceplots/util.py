@@ -6,38 +6,49 @@ import numpy as np
 
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
+from matplotlib import ticker
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 
-def addcolorbar(
-    *,
-    ax,
-    artist,
-    pos="right",
-    size="5%",
-    pad=0.05,
-    orientation="vertical",
-    stub=False,
-    max_ticks=None,
-    label=None,
-):
+def addcolorbar(*, ax, mappable, label=None, stub=False, **kwargs):
     r"""Add a colorbar to a matplotlib image.
 
     Parameters
     ----------
-    ax : :py:class:`matplotlib.axes.Axes`
-        The axis object the image is drawn in.
-    artist : :py:class:`matplotlib.image.AxesImage` etc.
-        The matplotlib artist which is colored, eg. an image.
+    ax : :class:`~matplotlib.axes.Axes`, list of Axes, optional
+        Parent axes from which space for a new colorbar axes will be stolen.
+        If a list of axes is given they will all be resized to make room for the
+        colorbar axes.
+    mappable : :class:`~matplotlib.cm.ScalarMappable`
+        The :class:`~matplotlib.image.Image`,
+        :class:`~matplotlib.contour.ContourSet`, etc.
+        described by this colorbar.
+
+    label : str, optional
+        Colorbar axis label (defaults to ``None``).
+    stub : bool, optional
+        If ``True``, return the Axes into which the colorbar was drawn.
+        The colorbar is invisible in this case. Defaults to ``False``.
+
+    kwargs : dict, optional
+        Keyword arguments that control the look of the colorbar.
+        Optional keyword arguments include:
+
+        ============= ====================================================
+        Property      Description
+        ============= ====================================================
+        pos           position wrt parent axes: left, right, bottom or top
+        size          5%; width, in percentage of the original axes width
+        orientation   vertical or horizontal
+        pad           0.05 if vertical, 0.15 if horizontal; fraction
+                      of original axes between colorbar and new image axes
+        max_ticks     maximum number of tick marks on the colorbar
+        ============= ====================================================
 
     Returns
     -------
-    cax : :py:class:`matplotlib.axes.Axes`
-        New axes instance, with attached colorbar.
-
-    Notes
-    -----
-    When changed, please update `this gist <https://gist.github.com/skuschel/85f0645bd6e37509164510290435a85a>`_.
+    cax : :class:`~matplotlib.axes.Axes`
+        New axes instance, with drawn colorbar.
 
     Examples
     --------
@@ -55,21 +66,33 @@ def addcolorbar(
         fig, ax = pyplot.subplots()
         img = ax.imshow(data)
 
-        addcolorbar(ax=ax, artist=img, label="x")
+        addcolorbar(ax=ax, mappable=img, label="x")
     """
-    divider = make_axes_locatable(ax)
-    cax = divider.append_axes(pos, size=size, pad=pad)
+    max_ticks = kwargs.pop("max_ticks", None)
+
+    pos = kwargs.pop("pos", "right")
+    size = kwargs.pop("size", "5%")
+    orientation = kwargs.pop("orientation", "vertical")
+
+    default_pad = 0.05
+    if orientation == "horizontal":
+        default_pad = 0.15
+    pad = kwargs.pop("pad", default_pad)
+
+    divider = make_axes_locatable(axes=ax)
+    cax = divider.append_axes(position=pos, size=size, pad=pad)
+
     if stub:
         cax.set_visible(False)
         return cax
 
-    cb = ax.figure.colorbar(artist, cax=cax, orientation=orientation)
-    if max_ticks is not None:
-        from matplotlib import ticker
+    cb = ax.figure.colorbar(mappable=mappable, cax=cax, orientation=orientation)
 
+    if max_ticks is not None:
         tick_locator = ticker.MaxNLocator(nbins=max_ticks)
         cb.locator = tick_locator
         cb.update_ticks()
+
     if label is not None:
         cb.set_label(label)
 
