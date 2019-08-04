@@ -18,9 +18,9 @@ class Plot2D:
 
     Parameters
     ----------
-    fig : :py:class:`matplotlib.figure.Figure`
+    fig : :class:`~matplotlib.figure.Figure`
         Empty figure to draw on.
-        If ``None``, a new :py:class:`Figure <matplotlib.figure.Figure>` will be created.
+        If ``None``, a new :class:`~matplotlib.figure.Figure` will be created.
         Defaults to ``None``.
     arr2d: :py:class:`np.ndarray`
         Data to be plotted.

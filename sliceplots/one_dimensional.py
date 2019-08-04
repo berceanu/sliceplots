@@ -33,6 +33,11 @@ def plot_multicolored_line(*, ax=None, x, y, other_y, cmap="viridis", **cbar_opt
     cbar_opts : dict, optional
         Options for :meth:`~sliceplots.util.addcolorbar`.
 
+    Returns
+    -------
+    ax, cax : tuple of Axes
+        Main Axes and colorbar Axes.
+
     Raises
     ------
     AssertionError
@@ -67,8 +72,7 @@ def plot_multicolored_line(*, ax=None, x, y, other_y, cmap="viridis", **cbar_opt
     if not (len(y) == len(other_y)):
         raise AssertionError("The two 'y' arrays must have the same size!")
 
-    if ax is None:
-        ax = _make_ax()
+    ax = ax or _make_ax()
 
     # Create a set of line segments so that we can color them individually
     # This creates the points as a N x 1 x 2 array so that we can stack points
@@ -88,7 +92,9 @@ def plot_multicolored_line(*, ax=None, x, y, other_y, cmap="viridis", **cbar_opt
     ax.set_xlim(x.min(), x.max())
     ax.set_ylim(y.min(), y.max())
 
-    addcolorbar(ax=ax, mappable=line, **cbar_opts)
+    cax = addcolorbar(ax=ax, mappable=line, **cbar_opts)
+
+    return ax, cax
 
 
 def plot1d_break_x(*, ax=None, h_axis, v_axis, param, slice_opts):
@@ -109,6 +115,11 @@ def plot1d_break_x(*, ax=None, h_axis, v_axis, param, slice_opts):
     slice_opts : dict
         Options for plotted line.
 
+    Returns
+    -------
+    ax_left, ax_right : tuple of Axes
+        Left and right Axes of the split plot.
+
     Examples
     --------
     >>> import numpy as np
@@ -127,16 +138,14 @@ def plot1d_break_x(*, ax=None, h_axis, v_axis, param, slice_opts):
     ...         "ylabel": r"$\rho$ (cm${}^{-3}$)",
     ...     },
     ...     slice_opts={"ls": "--", "color": "#d62728"})  #doctest: +ELLIPSIS
-    <matplotlib.axes._subplots.AxesSubplot object at 0x...>
+    (<matplotlib.axes._subplots.AxesSubplot object ...)
 
     """
-    if ax is None:
-        ax = _make_ax()
+    ax_left = ax or _make_ax()
 
-    ax_left = ax
     divider = make_axes_locatable(ax_left)
     ax_right = divider.new_horizontal(size="100%", pad=1)
-    ax.figure.add_axes(ax_right)
+    ax_left.figure.add_axes(ax_right)
 
     ax_left.plot(h_axis, v_axis, **slice_opts)
     ax_left.set_ylabel(param["ylabel"])
@@ -166,28 +175,35 @@ def plot1d_break_x(*, ax=None, h_axis, v_axis, param, slice_opts):
     ax_right.plot((-d, +d), (1 - d, 1 + d), **kwargs)
     ax_right.plot((-d, +d), (-d, +d), **kwargs)
 
-    return ax
+    return ax_left, ax_right
 
 
-class Plot1D:
+def plot1d(*, ax=None, h_axis, v_axis, xlabel=r"", ylabel=r"", **kwargs):
     r"""Plot the data with given labels and plot options.
 
     Parameters
     ----------
-    v_axis : :py:class:`np.ndarray`
-        y-axis data.
+    ax : class:`~matplotlib.axes.Axes`, optional
+        Axes instance, for plotting.
+        If ``None``, a new :class:`~matplotlib.figure.Figure` will be created.
+        Defaults to ``None``.
+
     h_axis : :py:class:`np.ndarray`
         x-axis data.
-    xlabel : str
+    v_axis : :py:class:`np.ndarray`
+        y-axis data.
+    xlabel : str, optional
         x-axis label.
-    ylabel : str
+    ylabel : str, optional
         y-axis label.
-    ax : :py:class:`matplotlib.axes.Axes`
-        Axes instance, for plotting.
-        If ``None``, a new :py:class:`Figure <matplotlib.figure.Figure>` will be created.
-        Defaults to ``None``.
-    kwargs : dict
-        Other arguments for :py:meth:`plot <matplotlib.axes.Axes.plot>`.
+
+    kwargs : dict, optional
+        Other arguments for :meth:`~matplotlib.axes.Axes.plot`.
+
+    Returns
+    -------
+    ax : Axes
+        Modified Axes, containing plot.
 
     Examples
     --------
@@ -196,7 +212,7 @@ class Plot1D:
     >>> uu = np.linspace(0, np.pi, 128)
     >>> data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
 
-    >>> Plot1D(
+    >>> plot1d(
     ...     h_axis=uu,
     ...     v_axis=data[data.shape[0] // 2, :],
     ...     xlabel=r"$z$ ($\mu$m)",
@@ -205,37 +221,30 @@ class Plot1D:
     ...     ylim=[-1, 1],
     ...     color="#d62728",
     ... )  #doctest: +ELLIPSIS
-    <sliceplots.one_dimensional.Plot1D object at 0x...>
+    <matplotlib.axes._subplots.AxesSubplot object at 0x...>
     """
+    xlim = kwargs.pop("xlim", [np.min(h_axis), np.max(h_axis)])
+    ylim = kwargs.pop("ylim", [np.min(v_axis), np.max(v_axis)])
+    #
+    xmin_idx, xmax_idx = (
+        _idx_from_val(h_axis, xlim[0]),
+        _idx_from_val(h_axis, xlim[1]),
+    )
+    #
+    h_axis = h_axis[xmin_idx:xmax_idx]
+    data = v_axis[xmin_idx:xmax_idx]
+    #
+    label = {"x": xlabel, "y": ylabel}
+    text = kwargs.pop("text", "")
+    #
+    ax = ax or _make_ax()
 
-    def __init__(self, *, ax=None, h_axis, v_axis, xlabel=r"", ylabel=r"", **kwargs):
-        self.xlim = kwargs.pop("xlim", [np.min(h_axis), np.max(h_axis)])
-        self.ylim = kwargs.pop("ylim", [np.min(v_axis), np.max(v_axis)])
-        #
-        xmin_idx, xmax_idx = (
-            _idx_from_val(h_axis, self.xlim[0]),
-            _idx_from_val(h_axis, self.xlim[1]),
-        )
-        #
-        self.h_axis = h_axis[xmin_idx:xmax_idx]
-        self.data = v_axis[xmin_idx:xmax_idx]
-        #
-        self.label = {"x": xlabel, "y": ylabel}
-        self.text = kwargs.pop("text", "")
-        #
-        if ax is None:
-            ax = _make_ax()
-        self.ax = ax
+    ax.plot(h_axis, data, **kwargs)
 
-        self.ax.plot(self.h_axis, self.data, **kwargs)
+    ax.set(
+        xlim=[h_axis[0], h_axis[-1]], ylim=ylim, ylabel=label["y"], xlabel=label["x"]
+    )
 
-        self.ax.set(
-            xlim=[self.h_axis[0], self.h_axis[-1]],
-            ylim=self.ylim,
-            ylabel=self.label["y"],
-            xlabel=self.label["x"],
-        )
+    ax.text(0.02, 0.95, text, transform=ax.transAxes, color="firebrick")
 
-        self.ax.text(
-            0.02, 0.95, self.text, transform=self.ax.transAxes, color="firebrick"
-        )
+    return ax

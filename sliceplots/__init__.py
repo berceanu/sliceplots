@@ -15,7 +15,7 @@ from sliceplots.util import addcolorbar  # NOQA: F401
 from sliceplots.one_dimensional import (
     plot_multicolored_line,
     plot1d_break_x,
-    Plot1D,
+    plot1d,
 )  # NOQA: F401
 from sliceplots.two_dimensional import Plot2D  # NOQA: F401
 
