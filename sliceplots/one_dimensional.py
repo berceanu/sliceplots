@@ -63,7 +63,7 @@ def plot_multicolored_line(*, ax=None, x, y, other_y, cmap="viridis", **cbar_opt
         y = np.sin(x)
         dydx = np.gradient(y) * 100  # first derivative
 
-        fig, ax = pyplot.subplots()
+        _, ax = pyplot.subplots()
 
         plot_multicolored_line(ax=ax, x=x, y=y, other_y=dydx, label="dydx")
 
@@ -122,23 +122,30 @@ def plot1d_break_x(*, ax=None, h_axis, v_axis, param, slice_opts):
 
     Examples
     --------
-    >>> import numpy as np
+    .. plot::
+        :include-source:
 
-    >>> uu = np.linspace(0, np.pi, 128)
-    >>> data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
+            import numpy as np
+            from matplotlib import pyplot
 
-    >>> plot1d_break_x(
-    ...     ax=None,
-    ...     h_axis=uu,
-    ...     v_axis=data[data.shape[0] // 2, :],
-    ...     param={
-    ...         "xlim_left": (0, 1),
-    ...         "xlim_right": (2, 3),
-    ...         "xlabel": r"$x$ ($\mu$m)",
-    ...         "ylabel": r"$\rho$ (cm${}^{-3}$)",
-    ...     },
-    ...     slice_opts={"ls": "--", "color": "#d62728"})  #doctest: +ELLIPSIS
-    (<matplotlib.axes._subplots.AxesSubplot object ...)
+            from sliceplots import plot1d_break_x
+
+            uu = np.linspace(0, np.pi, 128)
+            data = np.cos(uu - 0.5) * np.cos(uu.reshape(-1, 1) - 1.0)
+
+            _, ax = pyplot.subplots()
+
+            plot1d_break_x(
+                ax=ax,
+                h_axis=uu,
+                v_axis=data[data.shape[0] // 2, :],
+                param={
+                    "xlim_left": (0, 1),
+                    "xlim_right": (2, 3),
+                    "xlabel": r"$x$ ($\mu$m)",
+                    "ylabel": r"$\rho$ (cm${}^{-3}$)",
+                },
+                slice_opts={"ls": "--", "color": "#d62728"})
 
     """
     ax_left = ax or _make_ax()
