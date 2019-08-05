@@ -19,7 +19,7 @@ class Plot2D:
 
     Parameters
     ----------
-    fig : :class:`~matplotlib.figure.Figure`
+    fig : :class:`~matplotlib.figure.Figure`, optional
         Empty figure to draw on.
         If ``None``, a new :class:`~matplotlib.figure.Figure` will be created.
         Defaults to ``None``.
@@ -29,14 +29,14 @@ class Plot2D:
         Values on the "x" axis.
     v_axis: :py:class:`np.ndarray`
         Values on the "y" axis.
-    xlabel: str
+    xlabel: str, optional
         x-axis label.
-    ylabel: str
+    ylabel: str, optional
         y-axis label.
-    zlabel: str
-        Label for :py:class:`matplotlib.colorbar.Colorbar`.
-    kwargs : dict
-        Other plot options.
+    zlabel: str, optional
+        Label for :py:class:`~matplotlib.colorbar.Colorbar`.
+    kwargs : dict, optional
+        Other plot options, see examples below.
 
     Examples
     --------
