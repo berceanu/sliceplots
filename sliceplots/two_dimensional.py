@@ -135,16 +135,6 @@ class Plot2D:
 
         self._draw_fig(**kwargs)
 
-    def __str__(self):
-        return "extent=({:.3f}, {:.3f}, {:.3f}, {:.3f}); min, max = ({:.3f}, {:.3f})".format(
-            np.min(self.h_axis),
-            np.max(self.h_axis),
-            np.min(self.v_axis),
-            np.max(self.v_axis),
-            np.amin(self.data),
-            np.amax(self.data),
-        )
-
     def _main_panel(self, **kwargs):
         self.im = self.ax0.imshow(
             self.data,
