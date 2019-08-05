@@ -11,6 +11,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 
 from sliceplots.util import _idx_from_val
+from typing import Any, Optional
 
 
 class Plot2D:
@@ -76,14 +77,14 @@ class Plot2D:
     def __init__(
         self,
         *,
-        fig=None,
-        arr2d,
-        h_axis,
-        v_axis,
-        xlabel=r"",
-        ylabel=r"",
-        zlabel=r"",
-        **kwargs,
+        fig: Optional[Figure] = None,
+        arr2d: np.ndarray,
+        h_axis: np.ndarray,
+        v_axis: np.ndarray,
+        xlabel: Optional[str] = None,
+        ylabel: Optional[str] = None,
+        zlabel: Optional[str] = None,
+        **kwargs: Optional[Any],
     ):
         self.extent = kwargs.get(
             "extent", (np.min(h_axis), np.max(h_axis), np.min(v_axis), np.max(v_axis))

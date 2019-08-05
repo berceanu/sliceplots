@@ -93,8 +93,7 @@ def addcolorbar(*, ax, mappable, label=None, stub=False, **kwargs):
         cb.locator = tick_locator
         cb.update_ticks()
 
-    if label is not None:
-        cb.set_label(label)
+    cb.set_label(label)
 
     return cax
 
