@@ -17,9 +17,9 @@ def plot_multicolored_line(*, ax=None, x, y, other_y, cmap="viridis", **cbar_opt
 
     Parameters
     ----------
-    ax : :py:class:`matplotlib.axes.Axes`, optional
+    ax : :py:class:`~matplotlib.axes.Axes`, optional
         Axes instance, for plotting, defaults to ``None``.
-        If ``None``, a new :py:class:`Figure <matplotlib.figure.Figure>` will be created.
+        If ``None``, a new :py:class:`~matplotlib.figure.Figure` will be created.
 
     y : 1d array_like
         The dependent variable.
@@ -102,13 +102,13 @@ def plot1d_break_x(*, ax=None, h_axis, v_axis, param, slice_opts):
 
     Parameters
     ----------
-    ax : :py:class:`matplotlib.axes.Axes`
+    ax : :py:class:`~matplotlib.axes.Axes`, optional
         Axes instance, for plotting.
-        If ``None``, a new :py:class:`Figure <matplotlib.figure.Figure>` will be created.
+        If ``None``, a new :py:class:`~matplotlib.figure.Figure` will be created.
         Defaults to ``None``.
-    h_axis : :py:class:`numpy.ndarray`
+    h_axis : 1d array_like
         x-axis data.
-    v_axis : :py:class:`numpy.ndarray`
+    v_axis : 1d array_like
         y-axis data.
     param : dict
         Axes limits and labels.
