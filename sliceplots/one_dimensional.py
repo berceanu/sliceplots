@@ -10,7 +10,9 @@ from matplotlib.colors import Normalize
 from sliceplots.util import _idx_from_val, _make_ax, addcolorbar
 
 
-def plot_multicolored_line(*, ax=None, x, y, other_y, cmap="viridis", **cbar_opts):
+def plot_multicolored_line(
+    *, ax=None, x, y, other_y, cmap="viridis", vmin=None, vmax=None, **cbar_opts
+):
     r"""Plots a line colored based on the values of another array.
 
     Plots the curve ``y(x)``, colored based on the values in ``other_y``.
@@ -30,6 +32,10 @@ def plot_multicolored_line(*, ax=None, x, y, other_y, cmap="viridis", **cbar_opt
 
     cmap : str, optional
         The used colormap (defaults to "viridis").
+    vmin : float, optional
+        Lower normalization limit
+    vmax : float, optional
+        Upper normalization limit
     cbar_opts : dict, optional
         Options for :meth:`~sliceplots.util.addcolorbar`.
 
@@ -81,8 +87,13 @@ def plot_multicolored_line(*, ax=None, x, y, other_y, cmap="viridis", **cbar_opt
     points = np.array([x, y]).T.reshape(-1, 1, 2)
     segments = np.concatenate([points[:-1], points[1:]], axis=1)
 
+    if vmin is None:
+        vmin = np.min(other_y)
+    if vmax is None:
+        vmax = np.max(other_y)
+
     # Create a continuous norm to map from data points to colors
-    norm = Normalize(other_y.min(), other_y.max())
+    norm = Normalize(vmin, vmax)
     lc = LineCollection(segments, cmap=cmap, norm=norm)
     # Set the values used for colormapping
     lc.set_array(other_y)
