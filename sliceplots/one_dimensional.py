@@ -7,11 +7,20 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 from matplotlib.collections import LineCollection
 from matplotlib.colors import Normalize
 
-from sliceplots.util import _idx_from_val, _make_ax, addcolorbar
+from sliceplots.util import _idx_from_val, _make_ax
 
 
 def plot_multicolored_line(
-    *, ax=None, x, y, other_y, cmap="viridis", vmin=None, vmax=None, **cbar_opts
+    *,
+    ax=None,
+    x,
+    y,
+    other_y,
+    cmap="viridis",
+    vmin=None,
+    vmax=None,
+    linewidth=2,
+    alpha=1
 ):
     r"""Plots a line colored based on the values of another array.
 
@@ -36,13 +45,15 @@ def plot_multicolored_line(
         Lower normalization limit
     vmax : float, optional
         Upper normalization limit
-    cbar_opts : dict, optional
-        Options for :meth:`~sliceplots.util.addcolorbar`.
+    linewidth : float, optional (default 2)
+        Width of the plotted line
+    alpha : float, optional (default 1)
+        Line transparency, between 0 and 1
 
     Returns
     -------
-    ax, cax : tuple of Axes
-        Main Axes and colorbar Axes.
+    ax, line : Axes, LineCollection
+        Main Axes and plotted line
 
     Raises
     ------
@@ -97,15 +108,11 @@ def plot_multicolored_line(
     lc = LineCollection(segments, cmap=cmap, norm=norm)
     # Set the values used for colormapping
     lc.set_array(other_y)
-    lc.set_linewidth(2)
+    lc.set_linewidth(linewidth)
+    lc.set_alpha(alpha)
     line = ax.add_collection(lc)
 
-    ax.set_xlim(x.min(), x.max())
-    ax.set_ylim(y.min(), y.max())
-
-    cax = addcolorbar(ax=ax, mappable=line, **cbar_opts)
-
-    return ax, cax
+    return ax, line
 
 
 def plot1d_break_x(*, ax=None, h_axis, v_axis, param, slice_opts):
