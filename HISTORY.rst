@@ -2,6 +2,12 @@
 History
 =======
 
+0.3.2 (2019-10-28)
+------------------
+
+* Implement vmin, vmax and alpha for colored line plot
+
+
 0.3.1 (2019-08-06)
 ------------------
 
@@ -16,7 +22,7 @@ History
 0.2.1 (2019-08-02)
 ------------------
 
-* Fix bumpversion problem 
+* Fix bumpversion problem
 
 0.2.0 (2019-08-02)
 ------------------
