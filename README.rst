@@ -2,26 +2,14 @@
 Slice Plots
 ===========
 
-
 .. image:: https://img.shields.io/pypi/v/sliceplots.svg
    :target: https://pypi.python.org/pypi/sliceplots
-
-
-.. image:: https://readthedocs.org/projects/sliceplots/badge/?version=latest
-   :target: https://sliceplots.readthedocs.io/en/latest/?badge=latest
-   :alt: Documentation Status
-
 
 .. image:: https://img.shields.io/pypi/l/sliceplots.svg
    :target: https://github.com/berceanu/sliceplots/blob/master/LICENSE
    :alt: PyPI - License
 
-
 Thin wrapper on top of ``matplotlib``'s ``.imshow()`` for 2D plotting, with attached slice plots
-
-
-* Free software: BSD license
-* Documentation: https://sliceplots.readthedocs.io
 
 Features
 --------
