@@ -16,4 +16,3 @@ python:
       - requirements: requirements.txt
       - method: setuptools
         path: .
-   system_packages: true
