@@ -6,8 +6,12 @@
 # Note: there cannot be spaces after comma's here
 exclude = __init__.py
 ignore =
-    E26,   # Comments
-    W503,  # line break before binary operator
-    W504,  # line break after binary operator
-    E203,  # whitespace before ':'
+    # Comments
+    E26,
+    # line break before binary operator 
+    W503,
+    # line break after binary operator
+    W504,
+    # whitespace before ':'
+    E203,
 max-line-length = 120

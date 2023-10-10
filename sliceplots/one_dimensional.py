@@ -82,7 +82,7 @@ def plot_multicolored_line(
 
         _, ax = pyplot.subplots()
 
-        plot_multicolored_line(ax=ax, x=x, y=y, other_y=dydx, label="dydx")
+        plot_multicolored_line(ax=ax, x=x, y=y, other_y=dydx)
 
         ax.set(ylabel="y", xlabel="x")
     """
@@ -246,7 +246,7 @@ def plot1d(*, ax=None, h_axis, v_axis, xlabel=r"", ylabel=r"", **kwargs):
     ...     ylim=[-1, 1],
     ...     color="#d62728",
     ... )  #doctest: +ELLIPSIS
-    <matplotlib.axes._subplots.AxesSubplot object at 0x...>
+    <Axes: xlabel='$z$ ($\\mu$m)', ylabel='$a_0$'>
     """
     xlim = kwargs.pop("xlim", [np.min(h_axis), np.max(h_axis)])
     ylim = kwargs.pop("ylim", [np.min(v_axis), np.max(v_axis)])

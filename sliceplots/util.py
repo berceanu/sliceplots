@@ -114,7 +114,7 @@ def _make_ax(**my_adjust):
     Examples
     --------
     >>> _make_ax(left=0.15, right=0.98)  #doctest: +ELLIPSIS
-    <matplotlib.axes._subplots.AxesSubplot object at 0x...>
+    <Axes: >
     """
     adjust = dict(
         left=0.125,  # the left side of the subplots of the figure
