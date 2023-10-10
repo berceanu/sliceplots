@@ -7,10 +7,6 @@ Slice Plots
    :target: https://pypi.python.org/pypi/sliceplots
 
 
-.. image:: https://img.shields.io/travis/berceanu/sliceplots.svg
-   :target: https://travis-ci.org/berceanu/sliceplots
-
-
 .. image:: https://readthedocs.org/projects/sliceplots/badge/?version=latest
    :target: https://sliceplots.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
@@ -45,4 +41,3 @@ Features
 * broken-axis 1D plots
 * small codebase
 * designed for non-interactive use, scripting and publication-quality plots
-
