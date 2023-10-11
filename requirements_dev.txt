@@ -1,14 +1,14 @@
-pip==19.3.1
+pip==23.2.1
 bumpversion==0.5.3
-wheel==0.33.6
-watchdog==0.9.0
-flake8==3.7.9
-black==19.10b0
-tox==3.14.2
-Sphinx==2.2.2
-twine==3.1.1
+wheel==0.41.2
+watchdog==3.0.0
+flake8==6.1.0
+black==23.9.1
+tox==4.11.3
+sphinx==7.2.6
+twine==4.0.2
 
-pytest==5.3.1
-pytest-runner==5.2
-pytest-mpl==0.10
-pytest-doctestplus==0.5.0
+pytest==7.4.2
+pytest-doctestplus==1.0.0
+pytest-runner==6.0.0
+pytest-mpl==0.16.1
