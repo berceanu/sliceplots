@@ -1,3 +1,9 @@
+.. image:: sliceplots-two_dimensional-1.png
+   :alt: Sample plot
+   :width: 400px
+   :target: sliceplots-two_dimensional-1.png
+
+
 ===========
 Slice Plots
 ===========
